@@ -11,8 +11,4 @@
         'phone_num' => '聯絡電話',
         'submit' => '送出'
     );
-
-    function get_root_url() {
-        return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://' . $_SERVER['HTTP_HOST'] . '/';
-    }
 ?>
