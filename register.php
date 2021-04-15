@@ -37,26 +37,26 @@
                 createAccount($username, $password, $phone_num);
                 $_SESSION['Authenticated'] = true;
                 $_SESSION['Username'] = $username;
-                header("Location: home.php");
+                sendPopupAndGoto('註冊成功', 'home.php');
                 exit();
             }
 
         } catch(PDOException $e) {
-            sendError($e->getMessage());
+            session_unset();
+            session_destroy();
+            sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'index.php');
         }
 
     }
 
-    function sendError($msg) {
-        session_unset();
-        session_destroy();
+    function sendPopupAndGoto($msg, $page) {
         echo <<<EOT
             <!DOCTYPE html>
             <html>
                 <body>
                     <script>
-                        alert("Internal Error. $msg");
-                        window.location.replace("index.php");
+                        alert("$msg");
+                        window.location.replace("$page");
                     </script>
                 </body>
             </html>
@@ -85,7 +85,9 @@ EOT;
             ));
 
         } catch(PDOException $e) {
-            sendError($e->getMessage());
+            session_unset();
+            session_destroy();
+            sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'index.php');
         }
 
     }
