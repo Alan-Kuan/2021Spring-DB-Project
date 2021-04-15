@@ -28,7 +28,7 @@ function checkUserExists(username, job) {
 
     $.ajax({
         method: 'POST',
-        url: document.location.origin + '/ajax/checkUserExist.php',
+        url: document.location.origin + '/project/ajax/checkUserExist.php',
         data: {
             'username': username
         },

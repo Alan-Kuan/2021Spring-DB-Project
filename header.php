@@ -31,11 +31,11 @@
             integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
             crossorigin="anonymous" />
 
-        <link rel="stylesheet" href="/styles/style.css" />
-        <script src="/scripts/usernameValidater.js"></script>
-        <script src="/scripts/passwordValidater.js"></script>
-        <script src="/scripts/phonenumValidater.js"></script>
-        <script src="/scripts/submitionValidater.js"></script>
-        <script src="/scripts/passwordPeeker.js"></script>
+        <link rel="stylesheet" href="/project/styles/style.css" />
+        <script src="/project/scripts/usernameValidater.js"></script>
+        <script src="/project/scripts/passwordValidater.js"></script>
+        <script src="/project/scripts/phonenumValidater.js"></script>
+        <script src="/project/scripts/submitionValidater.js"></script>
+        <script src="/project/scripts/passwordPeeker.js"></script>
     </head>
     <body>
