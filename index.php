@@ -7,7 +7,7 @@
     $_SESSION['Authenticated'] = false;
 ?>
 
-<?php include './header.php'; ?>
+<?php include './header-index.php'; ?>
 
 <div class="bg-dark text-white px-5 py-3">
     <h1><?= $SITENAME; ?></h1>
