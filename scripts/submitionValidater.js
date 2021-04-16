@@ -14,7 +14,7 @@ $(document).ready(function() {
 
         let is_valid = true;
 
-        $(this).siblings().children('input').each(function() {
+        $(this).parent().siblings().children('input').each(function() {
 
             if($(this).hasClass('is-invalid')) {
 

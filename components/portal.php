@@ -18,12 +18,12 @@
         <div id="register" class="tab-pane show active" role="tabpanel">
             <h2><?= $MSG['register']; ?></h2>
             <form action="register.php" method="post">
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['username']; ?></span>
                     <input id="username" class="form-control" name="username" type="text" />
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['password']; ?></span>
                     <input id="password" class="form-control" name="password" type="password" />
                     <button class="btn btn-outline-secondary password-peeker" type="button">
@@ -31,7 +31,7 @@
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['password_again']; ?></span>
                     <input id="password-retype" class="form-control" name="password-retype" type="password" />
                     <button class="btn btn-outline-secondary password-peeker" type="button">
@@ -39,24 +39,26 @@
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['phone_num']; ?></span>
                     <input id="phone_num" class="form-control" name="phone_num" type="tel" />
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <input class="btn btn-primary register" type="submit" value="<?= $MSG['submit']; ?>" />
+                <div class="w-75 mx-auto mb-2">
+                    <input class="btn btn-primary register w-100" type="submit" value="<?= $MSG['submit']; ?>" />
+                </div>
             </form>
         </div>
 
         <div id="login" class="tab-pane" role="tabpanel">
             <h2><?= $MSG['login']; ?></h2>
             <form action="login.php" method="post">
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['username']; ?></span>
                     <input id="username" class="form-control" name="username" type="text" />
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <div class="input-group has-validation">
+                <div class="input-group has-validation w-75 mx-auto">
                     <span class="input-group-text"><?= $MSG['password']; ?></span>
                     <input id="password" class="form-control" name="password" type="password" />
                     <button class="btn btn-outline-secondary password-peeker" type="button">
@@ -64,7 +66,9 @@
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
                 </div>
-                <input class="btn btn-primary login" type="submit" value="<?= $MSG['submit']; ?>" />
+                <div class="w-75 mx-auto mb-2">
+                    <input class="btn btn-primary login w-100" type="submit" value="<?= $MSG['submit']; ?>" />
+                </div>
             </form>
         </div>
 
