@@ -10,7 +10,7 @@
 
 <?php includeWith('./components/navbar.php', array('page' => 'shop')); ?>
 
-<div class="container-70">
+<div class="w-75 mt-5 mx-auto">
 
     <h1><?= $MSG['shop']; ?></h1>
 

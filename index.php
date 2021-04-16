@@ -14,7 +14,7 @@
     <p><?= $DESC; ?></p>
 </div>
 
-<div class="container-70">
+<div class="w-75 mt-5 mx-auto">
 
     <?php include './components/portal.php'; ?>
 
