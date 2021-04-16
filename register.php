@@ -41,11 +41,13 @@
             header('Location: index.php');
             exit();
         } else {
-            $hashed_password = hash('sha256', $password);
-            $stmt = $conn->prepare("INSERT INTO users (username, password, phone_num) VALUES(:username, :password, :phone_num)");
+            $salt = str_pad(strval(rand(0000, 9999)), 4, '0', STR_PAD_LEFT);
+            $hashed_password = hash('sha256', $salt . $password);
+            $stmt = $conn->prepare("INSERT INTO users (username, password, salt, phone_num) VALUES(:username, :password, :salt, :phone_num)");
             $stmt->execute(array(
                 'username' => $username,
                 'password' => $hashed_password,
+                'salt' => $salt,
                 'phone_num' => $phone_num
             ));
             $_SESSION['Authenticated'] = true;
