@@ -2,7 +2,7 @@
 var is_empty = "欄位空白";
 var invalid_username = "帳號名稱只接受 0-9, '.', a-z, A-Z";
 var username_exists = "帳號已被註冊";
-var not_register = "不存在的帳號";
+var not_register = "不存在的使用者";
 
 $(document).ready(function() {
 

@@ -4,12 +4,12 @@ $(document).ready(function() {
 
         if($(this).hasClass('register')) {
             validateRegisterUsername($('#register input#username'));
-            validatePassword($('#register input#password'));
+            validateRegisterPassword($('#register input#password'));
             validatePassword2($('#register input#password-retype'));
             validatePhonenum($('#register input#phone_num'));
         } else if($(this).hasClass('login')) {
             validateLoginUsername($('#login input#username'));
-            validatePassword($('#login input#password'));
+            validateLoginPassword($('#login input#password'));
         }
 
         let is_valid = true;
