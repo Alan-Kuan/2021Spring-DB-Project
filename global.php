@@ -9,6 +9,15 @@
         'password' => '密碼',
         'password_again' => '確認密碼',
         'phone_num' => '聯絡電話',
-        'submit' => '送出'
+        'submit' => '送出',
+        'home' => '資訊主頁',
+        'shop' => '店家管理',
+        'logout' => '登出'
     );
+
+    function includeWith($filename, $vars) {
+        global $SITENAME, $MSG;
+        extract($vars);
+        include $filename;
+    }
 ?>

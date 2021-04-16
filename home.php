@@ -8,9 +8,11 @@
 
 <?php include './header.php'; ?>
 
+<?php includeWith('./components/navbar.php', array('page' => 'home')); ?>
+
 <div class="container-70">
 
-    <h1>Home</h1>
+    <h1><?= $MSG['home']; ?></h1>
 
 </div>  <!-- container -->
 
