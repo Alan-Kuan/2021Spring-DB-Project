@@ -9,10 +9,12 @@
 
 <?php include './header.php'; ?>
 
-<div class="container-70">
-
+<div class="bg-dark text-white px-5 py-3">
     <h1><?= $SITENAME; ?></h1>
     <p><?= $DESC; ?></p>
+</div>
+
+<div class="container-70">
 
     <?php include './components/portal.php'; ?>
 
