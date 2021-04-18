@@ -14,6 +14,8 @@
 
     <h1><?= $MSG['home']; ?></h1>
 
+    <?php include './components/homepage.php'; ?>
+
 </div>  <!-- container -->
 
 <?php include './footer.php'; ?>

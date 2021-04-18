@@ -12,7 +12,13 @@
         'submit' => '送出',
         'home' => '資訊主頁',
         'shop' => '店家管理',
-        'logout' => '登出'
+        'logout' => '登出',
+        'profile' => '個人資料',
+        'shop_list' => '店家列表',
+        'shop_name' => '商店名稱',
+        'city' => '城市',
+        'price' => '價格',
+        'amount' => '數量'
     );
 
     function includeWith($filename, $vars) {
