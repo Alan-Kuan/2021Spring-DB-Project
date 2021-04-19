@@ -7,19 +7,18 @@
             <input id="shop_name" class="form-control" name="shop_name" type="text" />
             <div class="invalid-feedback">{{ feedback }}</div>
         </div>
-        <div class="input-group has-validation w-75 mt-2">
+        <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $MSG['city']; ?></span>
-            <input id="city" class="form-control" name="city" type="text" />
-            <div class="invalid-feedback">{{ feedback }}</div>
+            <?php include './components/city-select.php'; ?>
         </div>
         <div class="input-group has-validation w-75 mt-2">
             <span class="input-group-text"><?= $MSG['mask_price']; ?></span>
-            <input id="mask_price" class="form-control" name="mask_price" type="number" />
+            <input id="mask_price" class="form-control" name="mask_price" type="number" min="0" />
             <div class="invalid-feedback">{{ feedback }}</div>
         </div>
         <div class="input-group has-validation w-75 mt-2">
             <span class="input-group-text"><?= $MSG['mask_amount']; ?></span>
-            <input id="mask_amount" class="form-control" name="mask_amount" type="number" />
+            <input id="mask_amount" class="form-control" name="mask_amount" type="number" min="0" />
             <div class="invalid-feedback">{{ feedback }}</div>
         </div>
         <div class="w-75 mt-2 position-relative">
