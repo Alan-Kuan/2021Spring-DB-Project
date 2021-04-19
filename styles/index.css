@@ -3,7 +3,3 @@
     border: 1px solid LightGray;
     border-radius: 1rem;
 }
-
-:is(#register, #login) :is(h2, .input-group, input[type="submit"]) {
-    margin-top: 1rem;
-}
