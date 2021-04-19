@@ -23,10 +23,10 @@
             </select>
         </dd>
 
-        <dd class="col-sm-3"><?= $MSG['price']; ?></dd>
+        <dd class="col-sm-3"><?= $MSG['mask_price']; ?></dd>
         <dd class="col-sm-9"></dd>
 
-        <dd class="col-sm-3"><?= $MSG['amount']; ?></dd>
+        <dd class="col-sm-3"><?= $MSG['mask_amount']; ?></dd>
         <dd class="col-sm-9">
         <select class="form-select" aria-label="amount select">
                 <option selected>選擇數量範圍</option>
