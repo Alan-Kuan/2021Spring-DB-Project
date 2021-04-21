@@ -22,6 +22,31 @@
         'not-shopkeeper-msg' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔'
     );
 
+    $CITY = array(
+        'taipei-city' => '臺北市',
+        'new-taipei-city' => '新北市',
+        'keelung-city' => '基隆市',
+        'taoyuan-city' => '桃園市',
+        'hsinchu-city' => '新竹市',
+        'hsinchu-county' => '新竹縣',
+        'miaoli-county' => '苗栗縣',
+        'taichung-city' => '臺中市',
+        'changhua-county' => '彰化縣',
+        'nantou-county' => '南投縣',
+        'yunlin-county' => '雲林縣',
+        'chiayi-city' => '嘉義市',
+        'chiayi-county' => '嘉義縣',
+        'tainan-city' => '臺南市',
+        'kaohsiung-city' => '高雄市',
+        'pingtung-county' => '屏東縣',
+        'yilan-county' => '宜蘭縣',
+        'hualien-county' => '花蓮縣',
+        'taitung-county' => '臺東縣',
+        'penghu-county' => '澎湖縣',
+        'kinmen-county' => '金門縣',
+        'lienchiang-county' => '連江縣'
+    );
+
     function includeWith($filename, $vars) {
         global $SITENAME, $MSG;
         extract($vars);
