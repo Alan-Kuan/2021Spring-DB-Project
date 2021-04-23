@@ -52,4 +52,20 @@
         extract($vars);
         include $filename;
     }
+
+    function sendPopupAndGoto($msg, $page) {
+        echo <<<EOT
+            <!DOCTYPE html>
+            <html>
+                <body>
+                    <script>
+                        alert("$msg");
+                        window.location.replace("$page");
+                    </script>
+                    <p>$msg</p>
+                    <p>如果沒有被跳轉，請點擊此<a href="$page">連結</a></p>
+                </body>
+            </html>
+EOT;
+    }
 ?>

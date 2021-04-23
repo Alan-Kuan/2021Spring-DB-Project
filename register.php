@@ -1,4 +1,6 @@
 <?php
+    include './global.php';
+
     session_start();
     $_SESSION['Authenticated'] = false;
 
@@ -60,21 +62,6 @@
         session_unset();
         session_destroy();
         sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'index.php');
-    }
-
-    function sendPopupAndGoto($msg, $page) {
-        echo <<<EOT
-            <!DOCTYPE html>
-            <html>
-                <body>
-                    <script>
-                        alert("$msg");
-                        window.location.replace("$page");
-                    </script>
-                    <p>如果沒有被跳轉，請點擊此<a href="$page">連結</a></p>
-                </body>
-            </html>
-EOT;
     }
 
     function validateUsername($username) {

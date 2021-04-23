@@ -1,4 +1,6 @@
 <?php
+    include './global.php';
+
     session_start();
     if(!isset($_SESSION['Authenticated']) || !$_SESSION['Authenticated']) {
         header('Location: index.php');
@@ -59,21 +61,6 @@
         session_unset();
         session_destroy();
         sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'shop.php');
-    }
-
-    function sendPopupAndGoto($msg, $page) {
-        echo <<<EOT
-            <!DOCTYPE html>
-            <html>
-                <body>
-                    <script>
-                        alert("$msg");
-                        window.location.replace("$page");
-                    </script>
-                    <p>如果沒有被跳轉，請點擊此<a href="$page">連結</a></p>
-                </body>
-            </html>
-EOT;
     }
 
     function validateShopname($shop_name) {
