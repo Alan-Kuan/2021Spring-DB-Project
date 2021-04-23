@@ -58,8 +58,6 @@
         }
 
     } catch(PDOException $e) {
-        session_unset();
-        session_destroy();
         sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'shop.php');
     }
 
