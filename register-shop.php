@@ -24,7 +24,7 @@
     $mask_amount = $_POST['mask_amount'];
 
     if(!validateShopname($shop_name) || !validateCity($city) || !validateNumber($mask_price) || !validateNumber($mask_amount)) {
-        //header('Location: shop.php');
+        header('Location: shop.php');
         exit();
     }
 
