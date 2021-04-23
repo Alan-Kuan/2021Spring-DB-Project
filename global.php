@@ -19,7 +19,9 @@
         'city' => '所在縣市',
         'mask_price' => '口罩價格',
         'mask_amount' => '口罩數量',
-        'not-shopkeeper-msg' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔'
+        'not-shopkeeper-msg' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
+        'shop-info' => '商店資訊',
+        'edit' => '編輯'
     );
 
     $CITY = array(

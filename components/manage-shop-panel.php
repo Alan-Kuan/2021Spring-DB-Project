@@ -27,20 +27,29 @@
 ?>
 
 <div>
-    <div>
-        <?= $MSG['shop_name']; ?>
-        <?= $shop_name; ?>
+    <h2><?= $MSG['shop-info']; ?></h2>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $MSG['shop_name']; ?></span>
+        <input class="form-control" type="text" value="<?= $shop_name; ?>" disabled />
     </div>
-    <div>
-        <?= $MSG['city']; ?>
-        <?= $CITY[$city_code]; ?>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $MSG['city']; ?></span>
+        <input class="form-control" type="text" value="<?= $CITY[$city_code]; ?>" disabled />
     </div>
-    <div>
-        <?= $MSG['mask_price']; ?>
-        <?= $mask_price; ?>
-    </div>
-    <div>
-        <?= $MSG['mask_amount']; ?>
-        <?= $mask_amount; ?>
-    </div>
+    <form action="editShopInfo.php" method="post">
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $MSG['mask_price']; ?></span>
+            <input class="form-control" name="value" type="number" min="0" value="<?= $mask_price; ?>" />
+            <input name="item" type="hidden" value="mask_price" />
+            <input class="btn btn-secondary" type="submit" value="<?= $MSG['edit']; ?>" />
+        </div>
+    </form>
+    <form action="editShopInfo.php" method="post">
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $MSG['mask_amount']; ?></span>
+            <input class="form-control" name="value" type="number" min="0" value="<?= $mask_amount; ?>" />
+            <input name="item" type="hidden" value="mask_amount" />
+            <input class="btn btn-secondary" type="submit" value="<?= $MSG['edit']; ?>" />
+        </div>
+    </form>
 </div>
