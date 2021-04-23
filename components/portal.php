@@ -26,7 +26,7 @@
                 <div class="input-group has-validation w-75 mx-auto mt-2">
                     <span class="input-group-text"><?= $MSG['password']; ?></span>
                     <input id="password" class="form-control" name="password" type="password" autocomplete="new-password" />
-                    <button class="btn btn-outline-secondary password-peeker" type="button">
+                    <button class="btn btn-secondary password-peeker" type="button">
                         <i class="bi-eye-slash" aria-hidden="true"></i>
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
@@ -34,7 +34,7 @@
                 <div class="input-group has-validation w-75 mx-auto mt-2">
                     <span class="input-group-text"><?= $MSG['password_again']; ?></span>
                     <input id="password-retype" class="form-control" name="password-retype" type="password" autocomplete="new-password" />
-                    <button class="btn btn-outline-secondary password-peeker" type="button">
+                    <button class="btn btn-secondary password-peeker" type="button">
                         <i class="bi-eye-slash" aria-hidden="true"></i>
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
@@ -61,7 +61,7 @@
                 <div class="input-group has-validation w-75 mx-auto mt-2">
                     <span class="input-group-text"><?= $MSG['password']; ?></span>
                     <input id="password" class="form-control" name="password" type="password" />
-                    <button class="btn btn-outline-secondary password-peeker" type="button">
+                    <button class="btn btn-secondary password-peeker" type="button">
                         <i class="bi-eye-slash" aria-hidden="true"></i>
                     </button>
                     <div class="invalid-feedback">{{ feedback }}</div>
