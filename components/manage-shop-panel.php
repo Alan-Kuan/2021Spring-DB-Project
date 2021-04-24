@@ -9,8 +9,11 @@
         $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
         # set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT shop_name, city, mask_price, mask_amount FROM shops JOIN users ON (shopkeeper_id = UID) WHERE username = BINARY :username");
-        $stmt->execute(array('username' => $_SESSION['Username']));
+
+        $SID = getOwnedShopID();
+
+        $stmt = $conn->prepare("SELECT shop_name, city, mask_price, mask_amount FROM shops WHERE SID = :SID");
+        $stmt->execute(array('SID' => $SID));
 
         if($stmt->rowCount() == 1) {
             $row = $stmt->fetch();
@@ -63,4 +66,77 @@
             <input class="btn btn-secondary" type="submit" value="<?= $MSG['add']; ?>" />
         </div>
     </form>
+
+    <?php
+        $shop_id = getOwnedShopID();
+        $employees = getEmployees($shop_id);
+
+        if(count($employees)):
+    ?>
+    <table class="table table-striped table-hover w-75 mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th><?= $MSG['username']; ?></th>
+                <th><?= $MSG['phone_num']; ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+            foreach($employees as $employee_info):
+        ?>
+            <tr>
+                <td class="align-middle"><?= $employee_info['username']; ?></td>
+                <td class="align-middle"><?= $employee_info['phone_num']; ?></td>
+                <td>
+                    <form action="deleteEmployee.php" method="post">
+                        <input type="hidden" name="employee_name" value="<?= $employee_info['username']; ?>" />
+                        <input class="btn btn-danger" type="submit" value="<?= $MSG['delete']; ?>" />
+                    </form>
+                </td>
+            </tr>
+        <?php
+            endforeach;
+        ?>
+        </tbody>
+    </table>
+    <?php
+        else:
+    ?>
+    <div class="mt-2">
+        <p><?= $MSG['no-employee']; ?></p>
+    </div>
+    <?php
+        endif;
+    ?>
 </div>
+
+<?php
+    function getEmployees($shop_id) {
+
+        $dbhostname = getenv('MYSQL_HOST');
+        $dbport = '3306';
+        $dbname = getenv('MYSQL_DATABASE');
+        $dbusername = getenv('MYSQL_USER');
+        $dbpassword = getenv('MYSQL_PASSWORD');
+
+        $employee_info = array();
+
+        try {
+            $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+            # set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare('SELECT username, phone_num FROM employee_shop JOIN users ON (employee_shop.employee_id = users.UID) WHERE shop_id = :shop_id ORDER BY username');
+
+            $stmt->execute(array('shop_id' => $shop_id));
+            while($row = $stmt->fetch())
+                array_push($employee_info, array('username' => $row['username'], 'phone_num' => $row['phone_num']));
+
+        } catch(PDOException $e) {
+            throw $e;
+        }
+
+        return $employee_info;
+
+    }
+?>

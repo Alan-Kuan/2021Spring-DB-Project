@@ -26,9 +26,12 @@
         'is-shopkeeper' => '店長不必再設定自己為員工',
         'not-exist' => '不存在的使用者名稱',
         'already-been-employee' => '該使用者已經是本店員工了',
-        'add-successfully' => '員工新增成功',
+        'add-successfully' => '成功新增員工',
+        'remove-successfully' => '成功移除員工',
+        'no-employee' => '還沒有員工嗎？趕快來招兵買馬吧',
         'edit' => '編輯',
-        'add' => '新增'
+        'add' => '新增',
+        'delete' => '刪除'
     );
 
     $CITY = array(
@@ -97,7 +100,11 @@ EOT;
 
             $stmt->execute(array('username' => $_SESSION['Username']));
 
-            $SID = $stmt->fetch()['SID'];
+            if($stmt->rowCount() == 1)
+                $SID = $stmt->fetch()['SID'];
+            else
+                throw new Exception($_SESSION['Username'] . ' is not a shopkeeper.');
+
         } catch(PDOException $e) {
             throw $e;
         }
