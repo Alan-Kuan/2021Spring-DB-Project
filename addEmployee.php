@@ -39,10 +39,7 @@
 
         $employee_id = $stmt->fetch()['UID'];
 
-        $stmt = $conn->prepare('SELECT SID FROM shops JOIN users ON (shops.shopkeeper_id = users.UID) WHERE username = :username');
-        $stmt->execute(array('username' => $_SESSION['Username']));
-
-        $SID = $stmt->fetch()['SID'];
+        $SID = getOwnedShopID();
 
         $stmt = $conn->prepare('SELECT * FROM employee_shop WHERE employee_id = :employee_id AND shop_id = :shop_id');
         $stmt->execute(array('employee_id' => $employee_id, 'shop_id' => $SID));

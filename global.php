@@ -77,4 +77,33 @@
             </html>
 EOT;
     }
+
+    function getOwnedShopID() {
+
+        if(isset($_SESSION['owned_shop_id']))
+            return $_SESSION['owned_shop_id'];
+
+        $dbhostname = getenv('MYSQL_HOST');
+        $dbport = '3306';
+        $dbname = getenv('MYSQL_DATABASE');
+        $dbusername = getenv('MYSQL_USER');
+        $dbpassword = getenv('MYSQL_PASSWORD');
+
+        try {
+            $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+            # set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare('SELECT SID FROM shops JOIN users ON (shops.shopkeeper_id = users.UID) WHERE username = :username');
+
+            $stmt->execute(array('username' => $_SESSION['Username']));
+
+            $SID = $stmt->fetch()['SID'];
+        } catch(PDOException $e) {
+            throw $e;
+        }
+
+        $_SESSION['owned_shop_id'] = $SID;
+
+        return $SID;
+    }
 ?>
