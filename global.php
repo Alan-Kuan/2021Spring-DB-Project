@@ -21,7 +21,14 @@
         'mask_amount' => '口罩數量',
         'not-shopkeeper-msg' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
         'shop-info' => '商店資訊',
-        'edit' => '編輯'
+        'employee-list' => '員工列表',
+        'add-employee' => '新增員工',
+        'is-shopkeeper' => '店長不必再設定自己為員工',
+        'not-exist' => '不存在的使用者名稱',
+        'already-been-employee' => '該使用者已經是本店員工了',
+        'add-successfully' => '員工新增成功',
+        'edit' => '編輯',
+        'add' => '新增'
     );
 
     $CITY = array(

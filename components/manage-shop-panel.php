@@ -26,7 +26,7 @@
     }
 ?>
 
-<div>
+<div class="mt-3">
     <h2><?= $MSG['shop-info']; ?></h2>
     <div class="input-group w-75 mt-2">
         <span class="input-group-text"><?= $MSG['shop_name']; ?></span>
@@ -50,6 +50,17 @@
             <input class="form-control" name="value" type="number" min="0" value="<?= $mask_amount; ?>" />
             <input name="item" type="hidden" value="mask_amount" />
             <input class="btn btn-secondary" type="submit" value="<?= $MSG['edit']; ?>" />
+        </div>
+    </form>
+</div>
+
+<div class="mt-3">
+    <h2><?= $MSG['employee-list']; ?></h2>
+    <form action="addEmployee.php" method="post">
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $MSG['add-employee']; ?></span>
+            <input class="form-control" name="employee_name" type="text" />
+            <input class="btn btn-secondary" type="submit" value="<?= $MSG['add']; ?>" />
         </div>
     </form>
 </div>
