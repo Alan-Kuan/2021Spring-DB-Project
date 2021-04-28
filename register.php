@@ -78,17 +78,12 @@
 
     function validateUsername($username) {
 
-        if(empty($username))
-            return false;
-
         return preg_match('/^[0-9\.a-zA-Z]+$/', $username);
 
     }
 
     function validatePassword($password, $password2) {
 
-        if(empty($password) || empty($password2))
-            return false;
         if($password !== $password2)
             return false;
         if(strlen($password) < 8)
@@ -99,9 +94,6 @@
     }
 
     function validatePhonenum($phone_num) {
-
-        if(empty($phone_num))
-            return false;
 
         $len = strlen($phone_num);
         if($len < 7 || $len > 10)

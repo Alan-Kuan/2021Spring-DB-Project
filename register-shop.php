@@ -71,10 +71,11 @@
 
     function validateShopname($shop_name) {
 
-        if(empty($shop_name))
+        if($shop_name === '')
             return false;
 
-        return preg_match('/^[\ -~]+$/', $shop_name);
+        // shop name should not start with or end with spaces
+        return !preg_match('/^\ +.*$/', $shop_name) && !preg_match('/^.*\ +$/', $shop_name);
 
     }
 
@@ -110,9 +111,6 @@
     }
 
     function validateNumber($num) {
-
-        if(empty($num))
-            return false;
 
         if(!preg_match('/^[+-]?[0-9]+$/', $num))
             return false;

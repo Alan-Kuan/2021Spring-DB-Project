@@ -44,9 +44,6 @@
 
     function validateNumber($num) {
 
-        if(empty($num))
-            return false;
-
         if(!preg_match('/^[+-]?[0-9]+$/', $num))
             return false;
 

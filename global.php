@@ -14,7 +14,7 @@
 
         // shop - not register
         'not-shopkeeper' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
-        'invalid-shop-name' => '店家名稱空白或是包含 ASCII-standard 以外的字元',
+        'invalid-shop-name' => '店家名稱空白或是開頭或結尾包含空白',
         'shop-already-exist' => '該商店名稱已被註冊',
         'is-not-number' => '口罩價格和口罩數量請輸入正整數或零',
 
