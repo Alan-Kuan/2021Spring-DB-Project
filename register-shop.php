@@ -23,8 +23,16 @@
     $mask_price = $_POST['mask_price'];
     $mask_amount = $_POST['mask_amount'];
 
-    if(!validateShopname($shop_name) || !validateCity($city) || !validateNumber($mask_price) || !validateNumber($mask_amount)) {
+    if(!validateShopname($shop_name)) {
+        sendPopupAndGoto($MSG['invalid-shop-name'], 'shop.php');
+        exit();
+    }
+    if(!validateCity($city)) {
         header('Location: shop.php');
+        exit();
+    }
+    if(!validateNumber($mask_amount) || !validateNumber($mask_price)) {
+        sendPopupAndGoto($MSG['is-not-number'], 'shop.php');
         exit();
     }
 
@@ -37,7 +45,7 @@
 
         // shop name already exists
         if($stmt->rowCount() == 1) {
-            header('Location: shop.php');
+            sendPopupAndGoto($MSG['shop-already-exist'], 'shop.php');
             exit();
         } else {
             $stmt = $conn->prepare("SELECT UID FROM users WHERE username = :username");

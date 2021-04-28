@@ -39,13 +39,13 @@
             } else {
                 session_unset();
                 session_destroy();
-                sendPopupAndGoto('登入失敗', 'index.php');
+                sendPopupAndGoto($MSG['login-failed'], 'index.php');
                 exit();
             }
         } else {
             session_unset();
             session_destroy();
-            sendPopupAndGoto('登入失敗', 'index.php');
+            sendPopupAndGoto($MSG['login-failed'], 'index.php');
             exit();
         }
 

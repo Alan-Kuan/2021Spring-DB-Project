@@ -22,10 +22,22 @@
     $password2 = $_POST['password-retype'];
     $phone_num = $_POST['phone_num'];
 
-    if(!validateUsername($username) || !validatePassword($password, $password2) || !validatePhonenum($phone_num)) {
+    if(!validateUsername($username)) {
         session_unset();
         session_destroy();
-        header('Location: index.php');
+        sendPopupAndGoto($MSG['invalid-username'], 'index.php');
+        exit();
+    }
+    if(!validatePassword($password, $password2)) {
+        session_unset();
+        session_destroy();
+        sendPopupAndGoto($MSG['invalid-password'], 'index.php');
+        exit();
+    }
+    if(!validatePhonenum($phone_num)) {
+        session_unset();
+        session_destroy();
+        sendPopupAndGoto($MSG['invalid-phone_num'], 'index.php');
         exit();
     }
 
@@ -40,7 +52,7 @@
         if($stmt->rowCount() == 1) {
             session_unset();
             session_destroy();
-            header('Location: index.php');
+            sendPopupAndGoto($MSG['user-already-exist'], 'index.php');
             exit();
         } else {
             $salt = str_pad(strval(rand(0000, 9999)), 4, '0', STR_PAD_LEFT);

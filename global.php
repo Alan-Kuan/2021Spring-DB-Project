@@ -3,8 +3,22 @@
     $DESC = '輕鬆購買口罩一點也不困難！';
 
     $MSG = array(
-        // shop
+        // register
+        'invalid-username' => "帳號名稱只接受 0-9, '.', a-z, A-Z",
+        'user-already-exist' => '帳號已被註冊',
+        'invalid-password' => '密碼驗證≠ 密碼或是長度小於 8 或是密碼包含 ASCII-standard 以外的字元',
+        'invalid-phone_num' => '電話號碼只能包含 0-9 的數字且長度應介於 7 ~ 10 個數字',
+
+        // login
+        'login-failed' => '登入失敗',
+
+        // shop - not register
         'not-shopkeeper' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
+        'invalid-shop-name' => '店家名稱空白或是包含 ASCII-standard 以外的字元',
+        'shop-already-exist' => '該商店名稱已被註冊',
+        'is-not-number' => '口罩價格和口罩數量請輸入正整數或零',
+
+        // shop - registered
         'is-shopkeeper' => '店長不必再設定自己為員工',
         'not-exist' => '不存在的使用者名稱',
         'already-been-employee' => '該使用者已經是本店員工了',
