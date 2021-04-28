@@ -69,13 +69,16 @@
         echo <<<EOT
             <!DOCTYPE html>
             <html>
+                <head>
+                    <meta http-equiv="refresh" content="5; url=$page">
+                </head>
                 <body>
                     <script>
                         alert("$msg");
                         window.location.replace("$page");
                     </script>
                     <p>$msg</p>
-                    <p>如果沒有被跳轉，請點擊此<a href="$page">連結</a></p>
+                    <p>網頁將在 5 秒後自動跳轉，或者你可以點擊此<a href="$page">連結</a></p>
                 </body>
             </html>
 EOT;
