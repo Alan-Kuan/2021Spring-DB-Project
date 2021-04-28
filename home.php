@@ -12,7 +12,7 @@
 
 <div class="w-75 my-5 mx-auto">
 
-    <h1><?= $MSG['home']; ?></h1>
+    <h1><?= $TEXT['home']; ?></h1>
 
     <?php include './components/homepage.php'; ?>
 

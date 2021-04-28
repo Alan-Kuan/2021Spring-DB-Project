@@ -3,35 +3,46 @@
     $DESC = '輕鬆購買口罩一點也不困難！';
 
     $MSG = array(
-        'register' => '註冊',
-        'login' => '登入',
-        'username' => '帳號名稱',
-        'password' => '密碼',
-        'password_again' => '確認密碼',
-        'phone_num' => '聯絡電話',
-        'submit' => '送出',
-        'home' => '資訊主頁',
-        'shop' => '店家管理',
-        'logout' => '登出',
-        'profile' => '個人資料',
-        'shop_list' => '店家列表',
-        'shop_name' => '商店名稱',
-        'city' => '所在縣市',
-        'mask_price' => '口罩價格',
-        'mask_amount' => '口罩數量',
-        'not-shopkeeper-msg' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
-        'shop-info' => '商店資訊',
-        'employee-list' => '員工列表',
-        'add-employee' => '新增員工',
+        // shop
+        'not-shopkeeper' => '你是口罩賣家嗎？可以在下方註冊並管理你的店家喔',
         'is-shopkeeper' => '店長不必再設定自己為員工',
         'not-exist' => '不存在的使用者名稱',
         'already-been-employee' => '該使用者已經是本店員工了',
         'add-successfully' => '成功新增員工',
         'remove-successfully' => '成功移除員工',
         'no-employee' => '還沒有員工嗎？趕快來招兵買馬吧',
+    );
+
+    $TEXT = array(
+        // index
+        'register' => '註冊',
+        'login' => '登入',
+        'username' => '帳號名稱',
+        'password' => '密碼',
+        'password_again' => '確認密碼',
+        'phone_num' => '聯絡電話',
+        
+        // general button
+        'submit' => '送出',
         'edit' => '編輯',
         'add' => '新增',
-        'delete' => '刪除'
+        'delete' => '刪除',
+        'logout' => '登出',
+        
+        // page name
+        'home' => '資訊主頁',
+        'shop' => '店家管理',
+
+        // home & shop
+        'profile' => '個人資料',
+        'shop_list' => '店家列表',
+        'shop_name' => '商店名稱',
+        'city' => '所在縣市',
+        'mask_price' => '口罩價格',
+        'mask_amount' => '口罩數量',
+        'shop-info' => '商店資訊',
+        'employee-list' => '員工列表',
+        'add-employee' => '新增員工',
     );
 
     $CITY = array(
@@ -60,7 +71,7 @@
     );
 
     function includeWith($filename, $vars) {
-        global $SITENAME, $MSG;
+        global $SITENAME, $TEXT;
         extract($vars);
         include $filename;
     }

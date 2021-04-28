@@ -12,7 +12,7 @@
 
 <div class="w-75 my-5 mx-auto">
 
-    <h1><?= $MSG['shop']; ?></h1>
+    <h1><?= $TEXT['shop']; ?></h1>
 
     <?php
         if(isShopkeeper($_SESSION['Username'])) {
