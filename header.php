@@ -26,6 +26,13 @@
             crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
-        <script src="/project/scripts/editShopInfo.js"></script>
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+            integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+            crossorigin="anonymous" />
+
+        <script src="/project/scripts/shopnameValidater.js"></script>
+        <script src="/project/scripts/numberValidater.js"></script>
+        <script src="/project/scripts/submissionValidater-shop.js"></script>
     </head>
     <body>

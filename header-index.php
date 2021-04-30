@@ -35,7 +35,7 @@
         <script src="/project/scripts/usernameValidater.js"></script>
         <script src="/project/scripts/passwordValidater.js"></script>
         <script src="/project/scripts/phonenumValidater.js"></script>
-        <script src="/project/scripts/submitionValidater.js"></script>
+        <script src="/project/scripts/submissionValidater-index.js"></script>
         <script src="/project/scripts/passwordPeeker.js"></script>
     </head>
     <body>

@@ -1,7 +1,7 @@
 <div>
     <p><?= $MSG['not-shopkeeper']; ?></p>
 
-    <form action="register-shop.php" method="post">
+    <form id="register-shop" action="register-shop.php" method="post">
         <div class="input-group has-validation w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['shop_name']; ?></span>
             <input id="shop_name" class="form-control" name="shop_name" type="text" />
