@@ -25,6 +25,10 @@
         'add-successfully' => '成功新增員工',
         'remove-successfully' => '成功移除員工',
         'no-employee' => '還沒有員工嗎？趕快來招兵買馬吧',
+
+        // search shop
+        'invalid-price-range' => '價格範圍不合理，下限的值須小於或等於上限',
+        'no-shop' => '搜尋無結果OAO',
     );
 
     $TEXT = array(

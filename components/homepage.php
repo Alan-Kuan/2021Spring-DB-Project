@@ -1,43 +1,167 @@
-<div class="w-75 mt-5 mx-auto">
+<?php
+    $dbhostname = getenv('MYSQL_HOST');
+    $dbport = '3306';
+    $dbname = getenv('MYSQL_DATABASE');
+    $dbusername = getenv('MYSQL_USER');
+    $dbpassword = getenv('MYSQL_PASSWORD');
 
-    <dl class="row">
-        <h2><?= $TEXT['profile']; ?></h2>
+    $user_name = $_SESSION['Username'];
+
+    $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);    
+    $stmt = $conn->prepare("SELECT phone_num FROM users WHERE username = :username");
+    $stmt->execute(array('username' => $user_name));
+
+    $phone_num = "";
+
+    if($stmt->rowCount() === 1)
+        $phone_num = $stmt->fetch()['phone_num'];
+?>
+
+<h2><?= $TEXT['profile']; ?></h2>
+<div>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['username']; ?></span>
+        <input class="form-control" type="text" value="<?= $_SESSION['Username'] ?>" disabled />
+    </div>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['phone_num']; ?></span>
+        <input class="form-control" type="text" value="<?= $phone_num; ?>" disabled />
+    </div>
+</div>
+
+<h2><?= $TEXT['shop_list']; ?></h2>
+<form id="search-shop" method="get">
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['shop_name']; ?></span>
+        <input type="text" id="shop_name" name="shop_name" value="<?= isset($_GET['shop_name']) ? $_GET['shop_name'] : ""; ?>">
+    </div>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['city']; ?></span>
+        <?php includeWith('./components/city-select.php', array('default' => isset($_GET['city']) ? $_GET['city'] : 'taipei-city')); ?>
+    </div>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['mask_price']; ?></span>
+        <input type="number" id="price_lower_bound" name="price_lower_bound" value="<?= isset($_GET['price_lower_bound']) ? $_GET['price_lower_bound'] : 0; ?>" min="0">
+        <span class="input-group-text">~</span>
+        <input type="number" id="price_upper_bound" name="price_upper_bound" value="<?= isset($_GET['price_upper_bound']) ? $_GET['price_upper_bound'] : 1000; ?>" min="0">
+    </div>
+    <div class="input-group w-75 mt-2">
+        <span class="input-group-text"><?= $TEXT['mask_amount']; ?></span>
+        <?php include './components/amount-select.php'; ?>
+    </div>
+    <div class="w-75 mt-2 position-relative">
+        <input class="btn btn-primary position-absolute end-0" type="submit" value="<?= $TEXT['submit']; ?>" />
+    </div>
+</form>
+
+<?php
+    $dbhostname = getenv('MYSQL_HOST');
+    $dbport = '3306';
+    $dbname = getenv('MYSQL_DATABASE');
+    $dbusername = getenv('MYSQL_USER');
+    $dbpassword = getenv('MYSQL_PASSWORD');
+    
+    $shop_arr = array();
+    while(!empty($shop_arr)) array_pop($shop_arr);
+
+    $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+
+    if(!empty($_GET)) {
+
+        $shop_name = $_GET['shop_name'];
+        $shop_name = "%" . $shop_name . "%";
+        $city = $_GET['city'];
+        $price_lower_bound = $_GET['price_lower_bound'];
+        $price_upper_bound = $_GET['price_upper_bound'];
+        $amount_range = $_GET['amount_range'];
+
+        if(!validatePriceRange($price_lower_bound, $price_upper_bound)) {
+            sendPopupAndGoto($MSG['invalid-price-range'], 'hemepage.php');
+            exit();
+        }
+
+        if($amount_range == 101) {
+            $stmt = $conn->prepare("SELECT * FROM shops WHERE UPPER(shop_name) LIKE UPPER(:name)
+                                                    AND city = :city
+                                                    AND mask_price BETWEEN :price_lower_bound AND :price_upper_bound
+                                                    AND mask_amount >= :amount_range");
+        }
+        else {
+            $stmt = $conn->prepare("SELECT * FROM shops WHERE UPPER(shop_name) LIKE UPPER(:name)
+                                                        AND city = :city
+                                                        AND mask_price BETWEEN :price_lower_bound AND :price_upper_bound
+                                                        AND mask_amount <= :amount_range"); 
+        }
+
+        $stmt->execute(array(
+            'name' => $shop_name,
+            'city' => $city,
+            'price_lower_bound' => $price_lower_bound,
+            'price_upper_bound' => $price_upper_bound,
+            'amount_range' => $amount_range
+        ));
+
+    }
+    else {
+        $stmt = $conn->prepare("SELECT * FROM shops;");
+
+        $stmt->execute();
+    }
+
+    while($row = $stmt->fetch((PDO::FETCH_ASSOC)))
+    {
+        array_push($shop_arr, array('shop_name' => $row['shop_name'], 'city' => $row['city'], 'mask_price' => $row['mask_price'], 'mask_amount' => $row['mask_amount']));
+    }
+
+    function validatePriceRange($price_lower_bound, $price_upper_bound) {
         
-        <dd class="col-sm-3"><?= $TEXT['username']; ?></dd>
-        <dd class="col-sm-9"><?= $_SESSION['Username'] ?></dd>
+        if(!preg_match('/^[+-]?[0-9]+$/', $price_lower_bound))
+            return false;
+    
+        if(!preg_match('/^[+-]?[0-9]+$/', $price_upper_bound))
+            return false;
         
-        <dd class="col-sm-3"><?= $TEXT['phone_num'] ?></dd>
-        <dd class="col-sm-9">Search in DB.</dd>
+            return ($price_lower_bound <= $price_upper_bound);
+    }
+?>
 
-        <h2><?= $TEXT['shop_list']; ?></h2>
-        <dd class="col-sm-3"><?= $TEXT['shop_name']; ?></dd>
-        <dd class="col-sm-9"></dd>
 
-        <dd class="col-sm-3"><?= $TEXT['city']; ?></dd>
-        <dd class="col-sm-9">
-            <select class="form-select" aria-label="city select">
-                <option selected>選擇一個城市</option>
-                <option value="1">天龍國</option>
-                <option value="2">偉大大學城</option>
-                <option value="3">其他=w=</option>
-            </select>
-        </dd>
-
-        <dd class="col-sm-3"><?= $TEXT['mask_price']; ?></dd>
-        <dd class="col-sm-9"></dd>
-
-        <dd class="col-sm-3"><?= $TEXT['mask_amount']; ?></dd>
-        <dd class="col-sm-9">
-        <select class="form-select" aria-label="amount select">
-                <option selected>選擇數量範圍</option>
-                <option value="1">售完</option>
-                <option value="2">稀少(不足 100)</option>
-                <option value="3">充足(100+)</option>
-            </select>
-        </dd>
-
-    </dl>
-
-    </div> <!-- tab content -->
-
-</div> <!-- rounded box -->
+<div class="mt-5">
+    <?php
+        if(count($shop_arr)):
+    ?>
+    <table class="table table-striped table-hover w-75 mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th><?= $TEXT['shop_name']; ?></th>
+                <th><?= $TEXT['city']; ?></th>
+                <th><?= $TEXT['mask_price']; ?></th>
+                <th><?= $TEXT['mask_amount']; ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+            foreach($shop_arr as $shop_info):
+        ?>
+            <tr>
+                <td class="align-middle"><?= $shop_info['shop_name']; ?></td>
+                <td class="align-middle"><?= $CITY[$shop_info['city']]; ?></td>
+                <td class="align-middle"><?= $shop_info['mask_price']; ?></td>
+                <td class="align-middle"><?= $shop_info['mask_amount']; ?></td>
+            </tr>
+        <?php
+            endforeach;
+        ?>
+        </tbody>
+    </table>
+    <?php
+        else:
+    ?>
+    <div class="mt-2">
+        <p><?= $MSG['no-shop']; ?></p>
+    </div>
+    <?php
+        endif;
+    ?>
+</div>
