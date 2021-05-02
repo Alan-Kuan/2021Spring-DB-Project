@@ -85,7 +85,7 @@
     );
 
     function includeWith($filename, $vars) {
-        global $SITENAME, $TEXT;
+        global $SITENAME, $MSG, $TEXT, $CITY;
         extract($vars);
         include $filename;
     }

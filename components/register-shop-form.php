@@ -9,7 +9,7 @@
         </div>
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['city']; ?></span>
-            <?php include './components/city-select.php'; ?>
+            <?php includeWith('./components/city-select.php', array('default' => 'taipei-city')); ?>
         </div>
         <div class="input-group has-validation w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['mask_price']; ?></span>
