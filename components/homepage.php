@@ -21,7 +21,7 @@
     <h2><?= $TEXT['profile']; ?></h2>
     <div class="input-group w-75 mt-2">
         <span class="input-group-text"><?= $TEXT['username']; ?></span>
-        <input class="form-control" type="text" value="<?= $_SESSION['Username'] ?>" disabled />
+        <input class="form-control" type="text" value="<?= $_SESSION['Username']; ?>" disabled />
     </div>
     <div class="input-group w-75 mt-2">
         <span class="input-group-text"><?= $TEXT['phone_num']; ?></span>
@@ -67,7 +67,6 @@
     $dbpassword = getenv('MYSQL_PASSWORD');
     
     $shop_arr = array();
-    while(!empty($shop_arr)) array_pop($shop_arr);
 
     $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
 
