@@ -21,8 +21,8 @@
             <input id="mask_amount" class="form-control" name="mask_amount" type="number" min="0" />
             <div class="invalid-feedback">{{ feedback }}</div>
         </div>
-        <div class="w-75 mt-2 position-relative">
-            <input class="btn btn-primary position-absolute end-0" type="submit" value="<?= $TEXT['submit']; ?>" />
+        <div class="w-75 mt-2 d-flex justify-content-end">
+            <input class="btn btn-primary" type="submit" value="<?= $TEXT['submit']; ?>" />
         </div>
     </form>
 </div>
