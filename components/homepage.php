@@ -148,7 +148,6 @@
                 <th><?= $TEXT['city']; ?></th>
                 <th><?= $TEXT['mask_price']; ?></th>
                 <th><?= $TEXT['mask_amount']; ?></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
