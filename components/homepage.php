@@ -17,8 +17,8 @@
         $phone_num = $stmt->fetch()['phone_num'];
 ?>
 
-<h2><?= $TEXT['profile']; ?></h2>
-<div>
+<div class="mt-3">
+    <h2><?= $TEXT['profile']; ?></h2>
     <div class="input-group w-75 mt-2">
         <span class="input-group-text"><?= $TEXT['username']; ?></span>
         <input class="form-control" type="text" value="<?= $_SESSION['Username'] ?>" disabled />
@@ -29,30 +29,35 @@
     </div>
 </div>
 
-<h2><?= $TEXT['shop_list']; ?></h2>
-<form id="search-shop" method="get">
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['shop_name']; ?></span>
-        <input type="text" id="shop_name" name="shop_name" value="<?= isset($_GET['shop_name']) ? $_GET['shop_name'] : ""; ?>">
-    </div>
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['city']; ?></span>
-        <?php includeWith('./components/city-select.php', array('default' => isset($_GET['city']) ? $_GET['city'] : 'taipei-city')); ?>
-    </div>
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['mask_price']; ?></span>
-        <input type="number" id="price_lower_bound" name="price_lower_bound" value="<?= isset($_GET['price_lower_bound']) ? $_GET['price_lower_bound'] : 0; ?>" min="0">
-        <span class="input-group-text">~</span>
-        <input type="number" id="price_upper_bound" name="price_upper_bound" value="<?= isset($_GET['price_upper_bound']) ? $_GET['price_upper_bound'] : 1000; ?>" min="0">
-    </div>
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['mask_amount']; ?></span>
-        <?php include './components/amount-select.php'; ?>
-    </div>
-    <div class="w-75 mt-2 position-relative">
-        <input class="btn btn-primary position-absolute end-0" type="submit" value="<?= $TEXT['submit']; ?>" />
-    </div>
-</form>
+<div class="mt-3">
+    <h2><?= $TEXT['shop_list']; ?></h2>
+    <form id="search-shop" method="get">
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $TEXT['shop_name']; ?></span>
+            <input class="form-control" type="text" id="shop_name" name="shop_name"
+                   value="<?= isset($_GET['shop_name']) ? $_GET['shop_name'] : ""; ?>" />
+        </div>
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $TEXT['city']; ?></span>
+            <?php includeWith('./components/city-select.php', array('default' => isset($_GET['city']) ? $_GET['city'] : 'taipei-city')); ?>
+        </div>
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $TEXT['mask_price']; ?></span>
+            <input class="form-control" type="number" id="price_lower_bound" name="price_lower_bound"
+                   value="<?= isset($_GET['price_lower_bound']) ? $_GET['price_lower_bound'] : 0; ?>" min="0" />
+            <span class="input-group-text">~</span>
+            <input class="form-control" type="number" id="price_upper_bound" name="price_upper_bound"
+                   value="<?= isset($_GET['price_upper_bound']) ? $_GET['price_upper_bound'] : 1000; ?>" min="0" />
+        </div>
+        <div class="input-group w-75 mt-2">
+            <span class="input-group-text"><?= $TEXT['mask_amount']; ?></span>
+            <?php include './components/amount-select.php'; ?>
+        </div>
+        <div class="w-75 mt-2 d-flex justify-content-end">
+            <input class="btn btn-primary" type="submit" value="<?= $TEXT['submit']; ?>" />
+        </div>
+    </form>
+</div>
 
 <?php
     $dbhostname = getenv('MYSQL_HOST');
@@ -68,8 +73,7 @@
 
     if(!empty($_GET)) {
 
-        $shop_name = $_GET['shop_name'];
-        $shop_name = "%" . $shop_name . "%";
+        $shop_name = "%" . $_GET['shop_name'] . "%";
         $city = $_GET['city'];
         $price_lower_bound = $_GET['price_lower_bound'];
         $price_upper_bound = $_GET['price_upper_bound'];
@@ -108,9 +112,13 @@
         $stmt->execute();
     }
 
-    while($row = $stmt->fetch((PDO::FETCH_ASSOC)))
-    {
-        array_push($shop_arr, array('shop_name' => $row['shop_name'], 'city' => $row['city'], 'mask_price' => $row['mask_price'], 'mask_amount' => $row['mask_amount']));
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        array_push($shop_arr, array(
+            'shop_name' => $row['shop_name'],
+            'city' => $row['city'],
+            'mask_price' => $row['mask_price'],
+            'mask_amount' => $row['mask_amount'])
+        );
     }
 
     function validatePriceRange($price_lower_bound, $price_upper_bound) {
@@ -120,8 +128,12 @@
     
         if(!preg_match('/^[+-]?[0-9]+$/', $price_upper_bound))
             return false;
+
+        if(intval($price_lower_bound, 10) < 0 || intval($price_upper_bound, 10) < 0)
+            return false;
         
-            return ($price_lower_bound <= $price_upper_bound);
+        return $price_lower_bound <= $price_upper_bound;
+
     }
 ?>
 
