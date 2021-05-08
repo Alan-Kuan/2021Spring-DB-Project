@@ -53,15 +53,15 @@
             <span class="input-group-text"><?= $TEXT['mask-amount']; ?></span>
             <?php include './components/amount-select.php'; ?>
         </div>
-        <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="work-shop"
+        <div class="form-check form-switch mt-2">
+            <input class="form-check-input" type="checkbox" id="work-shop" name="work-shop"
              <?= isset($_GET['work-shop']) && $_GET['work-shop'] === 'on' ? 'checked' : ''; ?> />
-            <label class="form-check-label" for="flexSwitchCheckDefault">
+            <label class="form-check-label" for="work-shop">
                 <?= $MSG['only-shops-I-work']; ?>
             </label>
         </div>
         <div class="w-75 mt-2 d-flex justify-content-end">
-            <button type="submit" class="btn btn-outline-dark">
+            <button class="btn btn-dark" type="submit" style="width: 5rem;">
                 <i class="bi bi-search"></i>
             </button>
         </div>
