@@ -29,6 +29,9 @@
         // search shop
         'invalid-price-range' => '價格範圍不合理，下限的值須小於或等於上限',
         'no-shop' => '搜尋無結果OAO',
+
+        // specify the shop
+        'only-shops-I-work' => '只顯示我工作的店家',
     );
 
     $TEXT = array(
@@ -51,13 +54,18 @@
         'home' => '資訊主頁',
         'shop' => '店家管理',
 
+        // mask amount range
+        'out-of-stock' => '售完',
+        'few' => '稀少(不足 100)',
+        'sufficient' => '充足(100+)',
+
         // home & shop
         'profile' => '個人資料',
         'shop_list' => '店家列表',
         'shop_name' => '商店名稱',
         'city' => '所在縣市',
-        'mask_price' => '口罩價格',
-        'mask_amount' => '口罩數量',
+        'mask-price' => '口罩價格',
+        'mask-amount' => '口罩數量',
         'shop-info' => '商店資訊',
         'employee-list' => '員工列表',
         'add-employee' => '新增員工',
@@ -145,4 +153,27 @@ EOT;
 
         return $SID;
     }
+
+    function isShopkeeper($username) {
+
+        $dbhostname = getenv('MYSQL_HOST');
+        $dbport = '3306';
+        $dbname = getenv('MYSQL_DATABASE');
+        $dbusername = getenv('MYSQL_USER');
+        $dbpassword = getenv('MYSQL_PASSWORD');
+
+        try {
+            $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+            # set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->prepare("SELECT SID FROM users JOIN shops ON (users.UID = shops.shopkeeper_id) WHERE username = BINARY :username");
+            $stmt->execute(array('username' => $username));
+            return $stmt->rowCount() == 1;
+        } catch(PDOException $e) {
+            echo 'Internal Error: ' . $e;
+            exit();
+        }
+
+    }
+
 ?>

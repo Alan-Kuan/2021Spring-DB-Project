@@ -1,6 +1,11 @@
 <select class="form-select" aria-label="amount select" name="amount_range">
-    <option selected>選擇數量範圍</option>
-    <option value=0>售完</option>
-    <option value=100>稀少(不足 100)</option>
-    <option value=101>充足(100+)</option>
+    <option value='out-of-stock' <?= isset($_GET['amount_range']) && ($_GET['amount_range'] === 'out-of-stock' ) ? 'selected' : ''; ?> >
+        <?= $TEXT['out-of-stock']; ?>
+    </option>
+    <option value='few' <?= isset($_GET['amount_range']) && ($_GET['amount_range'] === 'few' ) ? 'selected' : ''; ?>>
+        <?= $TEXT['few']; ?>
+    </option>
+    <option value='sufficient' <?= isset($_GET['amount_range']) && ($_GET['amount_range'] === 'sufficient' ) ? 'selected' : ''; ?>>
+        <?= $TEXT['sufficient']; ?>
+    </option>
 </select>

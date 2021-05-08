@@ -25,27 +25,3 @@
 </div>  <!-- container -->
 
 <?php include './footer.php'; ?>
-
-<?php
-    function isShopkeeper($username) {
-
-        $dbhostname = getenv('MYSQL_HOST');
-        $dbport = '3306';
-        $dbname = getenv('MYSQL_DATABASE');
-        $dbusername = getenv('MYSQL_USER');
-        $dbpassword = getenv('MYSQL_PASSWORD');
-
-        try {
-            $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
-            # set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare("SELECT SID FROM users JOIN shops ON (users.UID = shops.shopkeeper_id) WHERE username = BINARY :username");
-            $stmt->execute(array('username' => $username));
-            return $stmt->rowCount() == 1;
-        } catch(PDOException $e) {
-            echo 'Internal Error: ' . $e;
-            exit();
-        }
-
-    }
-?>

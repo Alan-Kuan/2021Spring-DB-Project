@@ -41,7 +41,7 @@
     </div>
     <form action="editShopInfo.php" method="post">
         <div class="input-group w-75 mt-2">
-            <span class="input-group-text"><?= $TEXT['mask_price']; ?></span>
+            <span class="input-group-text"><?= $TEXT['mask-price']; ?></span>
             <input class="form-control" name="value" type="number" min="0" value="<?= $mask_price; ?>" />
             <input name="item" type="hidden" value="mask_price" />
             <input class="btn btn-secondary" type="submit" value="<?= $TEXT['edit']; ?>" />
@@ -49,7 +49,7 @@
     </form>
     <form action="editShopInfo.php" method="post">
         <div class="input-group w-75 mt-2">
-            <span class="input-group-text"><?= $TEXT['mask_amount']; ?></span>
+            <span class="input-group-text"><?= $TEXT['mask-amount']; ?></span>
             <input class="form-control" name="value" type="number" min="0" value="<?= $mask_amount; ?>" />
             <input name="item" type="hidden" value="mask_amount" />
             <input class="btn btn-secondary" type="submit" value="<?= $TEXT['edit']; ?>" />
