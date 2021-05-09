@@ -32,6 +32,9 @@
 
         // specify the shop
         'only-shops-I-work' => '只顯示我工作的店家',
+
+        // no selection
+        'city-no-selection' => '請選擇一個縣市',
     );
 
     $TEXT = array(

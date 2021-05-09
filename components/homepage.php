@@ -39,7 +39,7 @@
         </div>
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['city']; ?></span>
-            <?php includeWith('./components/city-select.php', array('default' => isset($_GET['city']) ? $_GET['city'] : 'taipei-city')); ?>
+            <?php includeWith('./components/city-select.php', array('default' => isset($_GET['city']) ? $_GET['city'] : '')); ?>
         </div>
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['mask-price']; ?></span>
@@ -244,6 +244,7 @@
     function validateCity($city) {
 
         $cities = array(
+            'no-selection',
             'taipei-city',
             'new-taipei-city',
             'keelung-city',
