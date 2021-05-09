@@ -27,6 +27,10 @@
         sendPopupAndGoto($MSG['invalid-shop-name'], 'shop.php');
         exit();
     }
+    if($city === 'no-selection') {
+        sendPopupAndGoto($MSG['city-no-selection'], 'shop.php');
+        exit();
+    }
     if(!validateCity($city)) {
         header('Location: shop.php');
         exit();

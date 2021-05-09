@@ -32,6 +32,9 @@
 
         // specify the shop
         'only-shops-I-work' => '只顯示我工作的店家',
+
+        // no selection
+        'city-no-selection' => '請選擇一個縣市',
     );
 
     $TEXT = array(
@@ -55,6 +58,7 @@
         'shop' => '店家管理',
 
         // mask amount range
+        'all' => '請選擇一個範圍',
         'out-of-stock' => '售完',
         'few' => '稀少(不足 100)',
         'sufficient' => '充足(100+)',
