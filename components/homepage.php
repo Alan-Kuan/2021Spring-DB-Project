@@ -18,17 +18,12 @@
 ?>
 
 <?php
-    
-    $shop_arr = array();
-    $query_var = array();
-    $query = "";
-
     $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
 
     if(!empty($_GET)) {
 
         if (!isset($_GET['shop_name']) || !isset($_GET['city']) || !isset($_GET['price_lower_bound']) || !isset($_GET['price_upper_bound']) 
-            || !isset($_GET['amount_range']) ) {    
+            || !isset($_GET['amount_range'])) {    
             header('Location: home.php');
             exit();
         }
@@ -61,156 +56,63 @@
             exit();
         }
 
-        // only for work
-        if (isset($_GET['work-shop']) && $_GET['work-shop'] === 'on') {
+        $query = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
+        $query2 = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
+        $query_var = array();
 
-            $query = $query . "SELECT * FROM shops AS s JOIN users AS u ON (s.shopkeeper_id = u.UID) 
-                               WHERE u.username = :user_name ";
+        if(isset($_GET['work-shop']) && $_GET['work-shop'] === 'on') {
+            $query .= "FROM shops AS s JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id)
+                                  JOIN users AS u ON (u.UID = e_s.employee_id)
+                       WHERE u.username = :user_name
+                       AND s.shop_name LIKE :shop_name ";
+            $query2 .= "FROM shops AS s JOIN users AS u ON (s.shopkeeper_id = u.UID)
+                        WHERE u.username = :user_name
+                        AND s.shop_name LIKE :shop_name ";
             $query_var['user_name'] = $user_name;
-
-            $query_var['shop_name'] = "%" . $shop_name . "%";
-            $query = $query . "AND UPPER(shop_name) LIKE UPPER(:shop_name) ";
-
-            if($city !== "no-selection") {
-
-                $query_var['city'] = $city;
-                $query = $query . "AND s.city = :city ";
-
-            }
-
-            if($price_lower_bound !== '') {
-
-                $query_var['price_lower_bound'] = $price_lower_bound;
-                $query = $query . "AND s.mask_price >= :price_lower_bound ";
-
-            }
-
-            if($price_upper_bound !== '') {
-
-                $query_var['price_upper_bound'] = $price_upper_bound;
-                $query = $query . "AND s.mask_price <= :price_upper_bound ";
-
-            }
-            
-            if($amount_range != 1) {
-
-                $query_var['amount_range'] = $amount_range;
-                $query = $query . ($amount_range == 101 ? "AND s.mask_amount >= :amount_range "
-                                                        : "AND s.mask_amount <= :amount_range");
-
-            }
-
-            if(isShopkeeper($user_name)) {
-
-                $stmt = $conn->prepare($query);
-
-                $stmt->execute($query_var);
-
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($shop_arr, array(
-                        'shop_name' => $row['shop_name'],
-                        'city' => $row['city'],
-                        'mask_price' => $row['mask_price'],
-                        'mask_amount' => $row['mask_amount'])
-                    );
-                }
-
-            }
-
-            $query = "SELECT * FROM (shops AS s JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id))
-                                    JOIN users AS u ON (u.UID = e_s.employee_id)
-                      WHERE u.username = :user_name ";
-            
-            $query_var['user_name'] = $user_name;
-
-            $query_var['shop_name'] = "%" . $shop_name . "%";
-            $query = $query . "AND UPPER(shop_name) LIKE UPPER(:shop_name) ";
-
-            if($city !== "no-selection") {
-
-                $query_var['city'] = $city;
-                $query = $query . "AND s.city = :city ";
-
-            }
-
-            if($price_lower_bound !== '') {
-
-                $price_lower_bound = $_GET['price_lower_bound'];
-                $query_var['price_lower_bound'] = $price_lower_bound;
-                $query = $query . "AND s.mask_price >= :price_lower_bound ";
-
-            }
-
-            if($price_upper_bound !== '') {
-
-                $price_upper_bound = $_GET['price_upper_bound'];
-                $query_var['price_upper_bound'] = $price_upper_bound;
-                $query = $query . "AND s.mask_price <= :price_upper_bound ";
-
-            }
-
-            if($amount_range != 1) {
-
-                $amount_range = $_GET['amount_range'];
-                $query_var['amount_range'] = $amount_range;
-                $query = $query . ($amount_range == 101 ? "AND s.mask_amount >= :amount_range "
-                                                        : "AND s.mask_amount <= :amount_range");
-
-            }
-
-            $stmt = $conn->prepare($query);
-
-            $stmt->execute($query_var);
-            
-        }
-        else {
-
-            $query = "SELECT * FROM shops AS s WHERE UPPER(shop_name) LIKE UPPER(:shop_name)";
-            $query_var['shop_name'] = "%" . $shop_name . "%";
-
-            if($city !== "no-selection") {
-
-                $query_var['city'] = $city;
-                $query = $query . "AND s.city = :city ";
-
-            }
-
-            if($price_lower_bound !== '') {
-
-                $query_var['price_lower_bound'] = $price_lower_bound;
-                $query = $query . "AND s.mask_price >= :price_lower_bound ";
-
-            }
-
-            if($price_upper_bound !== '') {
-
-                $query_var['price_upper_bound'] = $price_upper_bound;
-                $query = $query . "AND s.mask_price <= :price_upper_bound ";
-
-            }
-
-            if($amount_range != 1) {
-
-                $query_var['amount_range'] = $amount_range;
-                $query = $query . ($amount_range == 101 ? "AND s.mask_amount >= :amount_range "
-                                                        : "AND s.mask_amount <= :amount_range");
-
-            }
-
-            $query = $query . ";";
-
-            $stmt = $conn->prepare($query);
-
-            $stmt->execute($query_var);
-
+            $query_var['shop_name'] = '%' . $shop_name . '%';
+        } else {
+            $query .= "FROM shops AS s
+                       WHERE s.shop_name LIKE :shop_name ";
+            $query2 .= "FROM shops AS s
+                       WHERE s.shop_name LIKE :shop_name ";
+            $query_var['shop_name'] = '%' . $shop_name . '%';
         }
 
-    }
-    else {
-        $stmt = $conn->prepare("SELECT * FROM shops;");
+        if($city !== "no-selection") {
+            $query .= "AND s.city = :city ";
+            $query2 .= "AND s.city = :city ";
+            $query_var['city'] = $city;
+        }
 
+        if($price_lower_bound !== '') {
+            $query .= "AND s.mask_price >= :price_lower_bound ";
+            $query2 .= "AND s.mask_price >= :price_lower_bound ";
+            $query_var['price_lower_bound'] = $price_lower_bound;
+        }
+
+        if($price_upper_bound !== '') {
+            $query .= "AND s.mask_price <= :price_upper_bound ";
+            $query2 .= "AND s.mask_price <= :price_upper_bound ";
+            $query_var['price_upper_bound'] = $price_upper_bound;
+        }
+        
+        if($amount_range != 1) {
+            $query .= ($amount_range == 101 ? "AND s.mask_amount >= :amount_range"
+                                            : "AND s.mask_amount <= :amount_range");
+            $query2 .= ($amount_range == 101 ? "AND s.mask_amount >= :amount_range"
+                                            : "AND s.mask_amount <= :amount_range");
+            $query_var['amount_range'] = $amount_range;
+        }
+
+        $stmt = $conn->prepare($query . " UNION (" . $query2 . ")");
+        $stmt->execute($query_var);
+
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM shops");
         $stmt->execute();
     }
+
+    $shop_arr = array();
 
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         array_push($shop_arr, array(
@@ -294,7 +196,7 @@
     }
 
     function validateWorkShop($work_shop) {
-        return ($work_shop == 'on' || $work_shop == 'off');
+        return ($work_shop === 'on' || $work_shop === 'off');
     }
 ?>
 
