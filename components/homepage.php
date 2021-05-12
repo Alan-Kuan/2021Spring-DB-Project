@@ -283,10 +283,10 @@
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['mask-price']; ?></span>
             <input class="form-control" type="number" id="price_lower_bound" name="price_lower_bound"
-                   value="<?= isset($_GET['price_lower_bound']) ? $_GET['price_lower_bound'] : 0; ?>" min="0" />
+                   value="<?= isset($_GET['price_lower_bound']) ? $_GET['price_lower_bound'] : ''; ?>" min="0" />
             <span class="input-group-text">~</span>
             <input class="form-control" type="number" id="price_upper_bound" name="price_upper_bound"
-                   value="<?= isset($_GET['price_upper_bound']) ? $_GET['price_upper_bound'] : 1000; ?>" min="0" />
+                   value="<?= isset($_GET['price_upper_bound']) ? $_GET['price_upper_bound'] : ''; ?>" min="0" />
         </div>
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['mask-amount']; ?></span>
