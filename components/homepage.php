@@ -19,11 +19,13 @@
 
 <?php
     $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+    $query_var = array();
 
     if(!empty($_GET)) {
 
         if (!isset($_GET['shop_name']) || !isset($_GET['city']) || !isset($_GET['price_lower_bound']) || !isset($_GET['price_upper_bound']) 
-            || !isset($_GET['amount_range'])) {    
+            || !isset($_GET['amount_range']) || !isset($_GET['sort-shop_name']) || !isset($_GET['sort-city'])
+            || !isset($_GET['sort-mask_price']) || !isset($_GET['sort-mask_amount'])) {    
             header('Location: home.php');
             exit();
         }
@@ -33,8 +35,13 @@
         $price_lower_bound = $_GET['price_lower_bound'];
         $price_upper_bound = $_GET['price_upper_bound'];
         $amount_range = $_GET['amount_range'];
+        $sort_shop_name = $_GET['sort-shop_name'];
+        $sort_city = $_GET['sort-city'];
+        $sort_mask_price = $_GET['sort-mask_price'];
+        $sort_mask_amount = $_GET['sort-mask_amount'];
             
-        if(!validateCity($city)) {
+        if(!validateCity($city) || !validateSort($sort_shop_name) || !validateSort($sort_city) || !validateSort($sort_mask_price)
+           || !validateSort($sort_mask_amount)) {
             header('Location: home.php');
             exit();
         }    
@@ -58,7 +65,6 @@
 
         $query = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
         $query2 = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
-        $query_var = array();
 
         if(isset($_GET['work-shop']) && $_GET['work-shop'] === 'on') {
             $query .= "FROM shops AS s JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id)
@@ -104,13 +110,51 @@
             $query_var['amount_range'] = $amount_range;
         }
 
-        $stmt = $conn->prepare($query . " UNION (" . $query2 . ")");
-        $stmt->execute($query_var);
+        $query .= " UNION " . $query2;
+
+        $first = true;
+
+        if($sort_shop_name !== 'no-sort') {
+            if($first) {
+                $query .= "ORDER BY shop_name " . $sort_shop_name;
+                $first = false;
+            } else {
+                $query .= ", shop_name " . $sort_shop_name;
+            }
+        }
+        if($sort_city !== 'no-sort') {
+            if($first) {
+                $query .= "ORDER BY city " . $sort_city;
+                $first = false;
+            } else {
+                $query .= ", city " . $sort_city;
+            }
+        }
+        if($sort_mask_price !== 'no-sort') {
+            if($first) {
+                $query .= "ORDER BY mask_price " . $sort_mask_price;
+                $first = false;
+            } else {
+                $query .= ", mask_price " . $sort_mask_price;
+            }
+        }
+        if($sort_mask_amount !== 'no-sort') {
+            if($first) {
+                $query .= "ORDER BY mask_amount " . $sort_mask_amount;
+                $first = false;
+            } else {
+                $query .= ", mask_amount " . $sort_mask_amount;
+            }
+        }
 
     } else {
-        $stmt = $conn->prepare("SELECT * FROM shops");
-        $stmt->execute();
+
+        $query = "SELECT * FROM shops";
+
     }
+
+    $stmt = $conn->prepare($query);
+    $stmt->execute($query_var);
 
     $shop_arr = array();
 
@@ -198,6 +242,10 @@
     function validateWorkShop($work_shop) {
         return ($work_shop === 'on' || $work_shop === 'off');
     }
+
+    function validateSort($status) {
+        return in_array($status, array('no-sort', 'asc', 'desc'));
+    }
 ?>
 
 <div class="mt-3">
@@ -215,6 +263,14 @@
 <div class="mt-3">
     <h2><?= $TEXT['shop_list']; ?></h2>
     <form id="search-shop" method="get">
+        <input type="hidden" id="sort-shop_name" name="sort-shop_name"
+               value="<?= isset($_GET['sort-shop_name']) ? $_GET['sort-shop_name'] : 'no-sort'; ?>" />
+        <input type="hidden" id="sort-city" name="sort-city"
+               value="<?= isset($_GET['sort-city']) ? $_GET['sort-city'] : 'no-sort'; ?>" />
+        <input type="hidden" id="sort-mask_price" name="sort-mask_price"
+               value="<?= isset($_GET['sort-mask_price']) ? $_GET['sort-mask_price'] : 'no-sort'; ?>" />
+        <input type="hidden" id="sort-mask_amount" name="sort-mask_amount"
+               value="<?= isset($_GET['sort-mask_amount']) ? $_GET['sort-mask_amount'] : 'no-sort'; ?>" />
         <div class="input-group w-75 mt-2">
             <span class="input-group-text"><?= $TEXT['shop_name']; ?></span>
             <input class="form-control" type="text" id="shop_name" name="shop_name"
@@ -251,18 +307,29 @@
     </form>
 </div>
 
-
 <div class="mt-5">
     <?php
         if(count($shop_arr)):
     ?>
-    <table class="table table-striped table-hover w-75 mt-3">
+    <table id="query-output" class="table table-striped table-hover w-75 mt-3">
         <thead class="table-dark">
             <tr>
-                <th><?= $TEXT['shop_name']; ?></th>
-                <th><?= $TEXT['city']; ?></th>
-                <th><?= $TEXT['mask-price']; ?></th>
-                <th><?= $TEXT['mask-amount']; ?></th>
+                <th id="shop_name">
+                    <?= $TEXT['shop_name']; ?>
+                <i class="bi <?= isset($_GET['sort-shop_name']) ? getIcon($_GET['sort-shop_name']) : ''; ?>"></i>
+                </th>
+                <th id="city">
+                    <?= $TEXT['city']; ?>
+                    <i class="bi <?= isset($_GET['sort-city']) ? getIcon($_GET['sort-city']) : ''; ?>"></i>
+                </th>
+                <th id="mask_price">
+                    <?= $TEXT['mask-price']; ?>
+                    <i class="bi <?= isset($_GET['sort-mask_price']) ? getIcon($_GET['sort-mask_price']) : ''; ?>"></i>
+                </th>
+                <th id="mask_amount">
+                    <?= $TEXT['mask-amount']; ?>
+                    <i class="bi <?= isset($_GET['sort-mask_amount']) ? getIcon($_GET['sort-mask_amount']) : ''; ?>"></i>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -290,3 +357,31 @@
         endif;
     ?>
 </div>
+
+<?php
+    function getSortVal($status) {
+
+        switch($status) {
+        case 'no-sort':
+            return 'asc';
+        case 'asc':
+            return 'desc';
+        case 'desc':
+            return 'no-sort';
+        }
+
+    }
+
+    function getIcon($status) {
+
+        switch($status) {
+        case 'asc':
+            return 'bi-sort-down-alt';
+        case 'desc':
+            return 'bi-sort-up';
+        default:
+            return '';
+        }
+
+    }
+?>

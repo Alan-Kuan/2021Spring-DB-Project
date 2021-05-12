@@ -34,5 +34,6 @@
         <script src="/project/scripts/shopnameValidater.js"></script>
         <script src="/project/scripts/numberValidater.js"></script>
         <script src="/project/scripts/submissionValidater-shop.js"></script>
+        <script src="/project/scripts/querySorter.js"></script>
     </head>
     <body>
