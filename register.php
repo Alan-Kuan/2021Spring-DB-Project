@@ -86,8 +86,6 @@
 
         if($password !== $password2)
             return false;
-        if(strlen($password) < 8)
-            return false;
 
         return preg_match('/^[\ -~]+$/', $password);
 
