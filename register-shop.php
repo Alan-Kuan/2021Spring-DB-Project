@@ -65,7 +65,7 @@
                 'mask_price' => $mask_price,
                 'mask_amount' => $mask_amount
             ));
-            sendPopupAndGoto('註冊成功', 'shop.php');
+            sendPopupAndGoto($MSG['register-success'], 'shop.php');
             exit();
         }
 

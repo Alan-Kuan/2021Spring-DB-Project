@@ -8,6 +8,7 @@
         'user-already-exist' => '帳號已被註冊',
         'invalid-password' => '密碼驗證≠ 密碼或是密碼包含 ASCII-standard 以外的字元',
         'invalid-phone_num' => '電話號碼只能包含 0-9 的數字且長度應介於 7 ~ 10 個數字',
+        'register-success' => '註冊成功',
 
         // login
         'login-failed' => '登入失敗',

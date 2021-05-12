@@ -66,7 +66,7 @@
             ));
             $_SESSION['Authenticated'] = true;
             $_SESSION['Username'] = $username;
-            sendPopupAndGoto('註冊成功', 'home.php');
+            sendPopupAndGoto($MSG['register-success'], 'home.php');
             exit();
         }
 
