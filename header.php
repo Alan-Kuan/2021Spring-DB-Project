@@ -31,6 +31,7 @@
             integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
             crossorigin="anonymous" />
 
+        <link rel="stylesheet" href="/project/styles/global.css" />
         <script src="/project/scripts/shopnameValidater.js"></script>
         <script src="/project/scripts/numberValidater.js"></script>
         <script src="/project/scripts/submissionValidater-shop.js"></script>

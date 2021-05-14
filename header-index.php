@@ -32,6 +32,7 @@
             crossorigin="anonymous" />
 
         <link rel="stylesheet" href="/project/styles/index.css" />
+        <link rel="stylesheet" href="/project/styles/global.css" />
         <script src="/project/scripts/usernameValidater.js"></script>
         <script src="/project/scripts/passwordValidater.js"></script>
         <script src="/project/scripts/phonenumValidater.js"></script>
