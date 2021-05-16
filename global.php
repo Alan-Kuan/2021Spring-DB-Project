@@ -57,6 +57,8 @@
         // page name
         'home' => '資訊主頁',
         'shop' => '店家管理',
+        'my-order' => '我的訂單',
+        'shop-order' => '店家訂單',
 
         // mask amount range
         'all' => '請選擇一個範圍',
