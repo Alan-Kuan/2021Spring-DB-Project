@@ -1,4 +1,6 @@
 <?php
+    date_default_timezone_set("Asia/Taipei");
+
     $SITENAME = '口罩達人';
     $DESC = '輕鬆購買口罩一點也不困難！';
 
