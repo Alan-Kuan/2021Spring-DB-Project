@@ -307,6 +307,20 @@
     </form>
 </div>
 
+<?php
+    function getIcon($status) {
+
+        switch($status) {
+        case 'asc':
+            return 'bi-sort-down-alt';
+        case 'desc':
+            return 'bi-sort-up';
+        default:
+            return '';
+        }
+
+    }
+?>
 <div class="mt-5">
     <?php
         if(count($shop_arr)):
@@ -357,31 +371,3 @@
         endif;
     ?>
 </div>
-
-<?php
-    function getSortVal($status) {
-
-        switch($status) {
-        case 'no-sort':
-            return 'asc';
-        case 'asc':
-            return 'desc';
-        case 'desc':
-            return 'no-sort';
-        }
-
-    }
-
-    function getIcon($status) {
-
-        switch($status) {
-        case 'asc':
-            return 'bi-sort-down-alt';
-        case 'desc':
-            return 'bi-sort-up';
-        default:
-            return '';
-        }
-
-    }
-?>
