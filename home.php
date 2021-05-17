@@ -14,7 +14,9 @@
 
     <h1><?= $TEXT['home']; ?></h1>
 
-    <?php include './components/homepage.php'; ?>
+    <?php include './components/profile.php'; ?>
+
+    <?php include './components/shop_list.php'; ?>
 
 </div>  <!-- container -->
 

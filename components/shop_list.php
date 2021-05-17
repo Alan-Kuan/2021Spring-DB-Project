@@ -1,23 +1,4 @@
 <?php
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
-    $user_name = $_SESSION['Username'];
-
-    $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);    
-    $stmt = $conn->prepare("SELECT phone_num FROM users WHERE username = :username");
-    $stmt->execute(array('username' => $user_name));
-
-    $phone_num = "";
-
-    if($stmt->rowCount() === 1)
-        $phone_num = $stmt->fetch()['phone_num'];
-?>
-
-<?php
     $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
     $query_var = array();
 
@@ -74,7 +55,7 @@
             $query2 .= "FROM shops AS s JOIN users AS u ON (s.shopkeeper_id = u.UID)
                         WHERE u.username = :user_name
                         AND s.shop_name LIKE :shop_name ";
-            $query_var['user_name'] = $user_name;
+            $query_var['user_name'] = $_SESSION['Username'];
             $query_var['shop_name'] = '%' . $shop_name . '%';
         } else {
             $query .= "FROM shops AS s
@@ -116,7 +97,7 @@
 
         if($sort_shop_name !== 'no-sort') {
             if($first) {
-                $query .= "ORDER BY shop_name " . $sort_shop_name;
+                $query .= " ORDER BY shop_name " . $sort_shop_name;
                 $first = false;
             } else {
                 $query .= ", shop_name " . $sort_shop_name;
@@ -124,7 +105,7 @@
         }
         if($sort_city !== 'no-sort') {
             if($first) {
-                $query .= "ORDER BY city " . $sort_city;
+                $query .= " ORDER BY city " . $sort_city;
                 $first = false;
             } else {
                 $query .= ", city " . $sort_city;
@@ -132,7 +113,7 @@
         }
         if($sort_mask_price !== 'no-sort') {
             if($first) {
-                $query .= "ORDER BY mask_price " . $sort_mask_price;
+                $query .= " ORDER BY mask_price " . $sort_mask_price;
                 $first = false;
             } else {
                 $query .= ", mask_price " . $sort_mask_price;
@@ -140,7 +121,7 @@
         }
         if($sort_mask_amount !== 'no-sort') {
             if($first) {
-                $query .= "ORDER BY mask_amount " . $sort_mask_amount;
+                $query .= " ORDER BY mask_amount " . $sort_mask_amount;
                 $first = false;
             } else {
                 $query .= ", mask_amount " . $sort_mask_amount;
@@ -247,18 +228,6 @@
         return in_array($status, array('no-sort', 'asc', 'desc'));
     }
 ?>
-
-<div class="mt-3">
-    <h2><?= $TEXT['profile']; ?></h2>
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['username']; ?></span>
-        <input class="form-control" type="text" value="<?= $_SESSION['Username']; ?>" disabled />
-    </div>
-    <div class="input-group w-75 mt-2">
-        <span class="input-group-text"><?= $TEXT['phone_num']; ?></span>
-        <input class="form-control" type="text" value="<?= $phone_num; ?>" disabled />
-    </div>
-</div>
 
 <div class="mt-3">
     <h2><?= $TEXT['shop_list']; ?></h2>
