@@ -36,6 +36,9 @@
 
         // no selection
         'city-no-selection' => '請選擇一個縣市',
+
+        // order
+        'no-order' => '這裡沒有訂單喔',
     );
 
     $TEXT = array(
@@ -52,6 +55,7 @@
         'edit' => '編輯',
         'add' => '新增',
         'delete' => '刪除',
+        'cancel' => '取消',
         'logout' => '登出',
         
         // page name
@@ -76,6 +80,18 @@
         'shop-info' => '商店資訊',
         'employee-list' => '員工列表',
         'add-employee' => '新增員工',
+
+        // order
+        'OID' => '訂單編號',
+        'status' => '狀態',
+        'created-time' => '建立時間',
+        'completed-time' => '完成/取消時間',
+        'order-maker' => '建立者',
+        'order-completer' => '完成/取消者',
+        'total-price' => '總價',
+        'pending' => '待處理',
+        'completed' => '已完成',
+        'canceled' => '已取消',
     );
 
     $CITY = array(

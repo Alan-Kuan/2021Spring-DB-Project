@@ -14,6 +14,8 @@
 
     <h1><?= $TEXT['my-order']; ?></h1>
 
+    <?php include './components/order_list-my.php' ?>
+
 </div>  <!-- container -->
 
 <?php include './footer.php'; ?>
