@@ -52,14 +52,10 @@
             sendPopupAndGoto($MSG['shop-already-exist'], 'shop.php');
             exit();
         } else {
-            $stmt = $conn->prepare("SELECT UID FROM users WHERE username = :username");
-            $stmt->execute(array('username' => $_SESSION['Username']));
-            $shopkeeper_id = $stmt->fetch()['UID'];
-
             $stmt = $conn->prepare("INSERT INTO shops (shopkeeper_id, shop_name, city, mask_price, mask_amount)
                                     VALUES(:shopkeeper_id, :shop_name, :city, :mask_price, :mask_amount)");
             $stmt->execute(array(
-                'shopkeeper_id' => $shopkeeper_id,
+                'shopkeeper_id' => $_SESSION['UID'],
                 'shop_name' => $shop_name,
                 'city' => $city,
                 'mask_price' => $mask_price,

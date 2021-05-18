@@ -24,13 +24,13 @@
         $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
         # set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT o.order_maker_id, o.shop_id, o.order_amount
-                                FROM orders AS o JOIN users AS u ON (o.order_maker_id = u.UID)
-                                WHERE u.username = BINARY :username
-                                AND o.OID = :OID
-                                AND o.status = 'pending'");
+        $stmt = $conn->prepare("SELECT order_maker_id, shop_id, order_amount
+                                FROM orders
+                                WHERE order_maker_id = :UID
+                                AND OID = :OID
+                                AND status = 'pending'");
         $stmt->execute(array(
-            'username' => $_SESSION['Username'],
+            'UID' => $_SESSION['UID'],
             'OID' => $OID)
         );
 

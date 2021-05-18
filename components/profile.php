@@ -8,8 +8,8 @@
     $username = $_SESSION['Username'];
 
     $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);    
-    $stmt = $conn->prepare("SELECT phone_num FROM users WHERE username = :username");
-    $stmt->execute(array('username' => $username));
+    $stmt = $conn->prepare("SELECT phone_num FROM users WHERE UID = :UID");
+    $stmt->execute(array('UID' => $_SESSION['UID']));
 
     $phone_num = "";
 

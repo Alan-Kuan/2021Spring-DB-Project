@@ -13,11 +13,9 @@
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $query = 'SELECT o.OID, o.status, o.created_time, o.completed_time, o.order_amount, o.order_price, c.username, s.shop_name
-                  FROM orders AS o JOIN users AS m ON (o.order_maker_id = m.UID)
-                      LEFT JOIN users AS c ON (o.completer_id = c.UID)
-                      JOIN shops AS s ON (o.shop_id = s.SID)
-                  WHERE m.username = BINARY :username';
-        $query_var = array('username' => $_SESSION['Username']);
+                  FROM orders AS o LEFT JOIN users AS c ON (o.completer_id = c.UID) JOIN shops AS s ON (o.shop_id = s.SID)
+                  WHERE o.order_maker_id = :UID';
+        $query_var = array('UID' => $_SESSION['UID']);
 
         if(isset($_GET['status'])) {
 

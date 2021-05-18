@@ -54,21 +54,26 @@
             session_destroy();
             sendPopupAndGoto($MSG['user-already-exist'], 'index.php');
             exit();
-        } else {
-            $salt = str_pad(strval(rand(0000, 9999)), 4, '0', STR_PAD_LEFT);
-            $hashed_password = hash('sha256', $salt . $password);
-            $stmt = $conn->prepare("INSERT INTO users (username, password, salt, phone_num) VALUES(:username, :password, :salt, :phone_num)");
-            $stmt->execute(array(
-                'username' => $username,
-                'password' => $hashed_password,
-                'salt' => $salt,
-                'phone_num' => $phone_num
-            ));
-            $_SESSION['Authenticated'] = true;
-            $_SESSION['Username'] = $username;
-            sendPopupAndGoto($MSG['register-success'], 'home.php');
-            exit();
         }
+
+        $salt = str_pad(strval(rand(0000, 9999)), 4, '0', STR_PAD_LEFT);
+        $hashed_password = hash('sha256', $salt . $password);
+        $stmt = $conn->prepare("INSERT INTO users (username, password, salt, phone_num) VALUES(:username, :password, :salt, :phone_num)");
+        $stmt->execute(array(
+            'username' => $username,
+            'password' => $hashed_password,
+            'salt' => $salt,
+            'phone_num' => $phone_num
+        ));
+
+        $stmt = $conn->prepare("SELECT UID FROM users WHERE username = :username");
+        $stmt->execute(array('username' => $username));
+
+        $_SESSION['Authenticated'] = true;
+        $_SESSION['Username'] = $username;
+        $_SESSION['UID'] = $stmt->fetch()['UID'];
+
+        sendPopupAndGoto($MSG['register-success'], 'home.php');
 
     } catch(PDOException $e) {
         session_unset();

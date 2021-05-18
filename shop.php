@@ -15,7 +15,7 @@
     <h1><?= $TEXT['shop']; ?></h1>
 
     <?php
-        if(isShopkeeper($_SESSION['Username'])) {
+        if(isShopkeeper($_SESSION['UID'])) {
             include './components/manage-shop-panel.php';
         } else {
             include './components/register-shop-form.php';

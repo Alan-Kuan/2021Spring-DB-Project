@@ -49,13 +49,12 @@
 
         if(isset($_GET['work-shop']) && $_GET['work-shop'] === 'on') {
             $query .= "FROM shops AS s JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id)
-                                  JOIN users AS u ON (u.UID = e_s.employee_id)
-                       WHERE u.username = :user_name
+                       WHERE e_s.employee_id = :UID
                        AND s.shop_name LIKE :shop_name ";
-            $query2 .= "FROM shops AS s JOIN users AS u ON (s.shopkeeper_id = u.UID)
-                        WHERE u.username = :user_name
+            $query2 .= "FROM shops AS s
+                        WHERE s.shopkeeper_id = :UID
                         AND s.shop_name LIKE :shop_name ";
-            $query_var['user_name'] = $_SESSION['Username'];
+            $query_var['UID'] = $_SESSION['UID'];
             $query_var['shop_name'] = '%' . $shop_name . '%';
         } else {
             $query .= "FROM shops AS s

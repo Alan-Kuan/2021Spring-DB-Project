@@ -126,9 +126,11 @@
             $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
             # set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare('SELECT username, phone_num FROM employee_shop JOIN users ON (employee_shop.employee_id = users.UID) WHERE shop_id = :shop_id ORDER BY username');
-
+            $stmt = $conn->prepare('SELECT username, phone_num
+                                    FROM employee_shop JOIN users ON (employee_shop.employee_id = users.UID)
+                                    WHERE shop_id = :shop_id ORDER BY username');
             $stmt->execute(array('shop_id' => $shop_id));
+
             while($row = $stmt->fetch())
                 array_push($employee_info, array('username' => $row['username'], 'phone_num' => $row['phone_num']));
 

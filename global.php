@@ -162,9 +162,9 @@ EOT;
             $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
             # set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare('SELECT SID FROM shops JOIN users ON (shops.shopkeeper_id = users.UID) WHERE username = :username');
+            $stmt = $conn->prepare('SELECT SID FROM shops WHERE shopkeeper_id = :UID');
 
-            $stmt->execute(array('username' => $_SESSION['Username']));
+            $stmt->execute(array('UID' => $_SESSION['UID']));
 
             if($stmt->rowCount() == 1)
                 $SID = $stmt->fetch()['SID'];
@@ -180,7 +180,7 @@ EOT;
         return $SID;
     }
 
-    function isShopkeeper($username) {
+    function isShopkeeper($UID) {
 
         $dbhostname = getenv('MYSQL_HOST');
         $dbport = '3306';
@@ -192,8 +192,8 @@ EOT;
             $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
             # set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare("SELECT SID FROM users JOIN shops ON (users.UID = shops.shopkeeper_id) WHERE username = BINARY :username");
-            $stmt->execute(array('username' => $username));
+            $stmt = $conn->prepare("SELECT SID FROM shops WHERE shopkeeper_id = :UID");
+            $stmt->execute(array('UID' => $UID));
             return $stmt->rowCount() == 1;
         } catch(PDOException $e) {
             echo 'Internal Error: ' . $e;

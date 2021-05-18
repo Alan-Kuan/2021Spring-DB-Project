@@ -31,8 +31,8 @@
         $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
         # set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("UPDATE shops JOIN users ON (shops.shopkeeper_id = users.UID) SET $item = :value WHERE username = :username");
-        $stmt->execute(array('value' => $value, 'username' => $_SESSION['Username']));
+        $stmt = $conn->prepare("UPDATE shops SET $item = :value WHERE shopkeeper_id = :UID");
+        $stmt->execute(array('value' => $value, 'UID' => $_SESSION['UID']));
 
         header('Location: shop.php');
 
