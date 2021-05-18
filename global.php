@@ -38,6 +38,7 @@
 
         // no selection
         'city-no-selection' => '請選擇一個縣市',
+        'status-no-selection' => '請選擇一個狀態',
 
         // order
         'no-order' => '這裡沒有訂單喔',

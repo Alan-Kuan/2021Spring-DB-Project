@@ -12,13 +12,31 @@
         # set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $conn->prepare("SELECT o.OID, o.status, o.created_time, o.completed_time, o.order_amount, o.order_price,
-                                    a.username, s.shop_name
-                                FROM orders AS o JOIN users AS m ON (o.order_maker_id = m.UID)
-                                    LEFT JOIN users AS a ON (o.completer_id = a.UID)
-                                    JOIN shops AS s ON (o.shop_id = s.SID)
-                                WHERE m.username = BINARY :username");
-        $stmt->execute(array('username' => $_SESSION['Username']));
+        $query = 'SELECT o.OID, o.status, o.created_time, o.completed_time, o.order_amount, o.order_price, c.username, s.shop_name
+                  FROM orders AS o JOIN users AS m ON (o.order_maker_id = m.UID)
+                      LEFT JOIN users AS c ON (o.completer_id = c.UID)
+                      JOIN shops AS s ON (o.shop_id = s.SID)
+                  WHERE m.username = BINARY :username';
+        $query_var = array('username' => $_SESSION['Username']);
+
+        if(isset($_GET['status'])) {
+
+            $status = $_GET['status']; 
+
+            if(!in_array($status, array('no-selection', 'pending', 'completed', 'canceled'))) {
+                header('Location: my_order.php');
+                exit();
+            }
+
+            if($status !== 'no-selection') {
+                $query .= ' AND o.status = :status';
+                $query_var['status'] = $status;
+            }
+
+        }
+
+        $stmt = $conn->prepare($query);
+        $stmt->execute($query_var);
 
         if($stmt->rowCount() == 1) {
             $row = $stmt->fetch();
@@ -40,7 +58,17 @@
     }
 ?>
 
-<div class="mt-5">
+<div class="mt-5 w-25">
+    <form method="get">
+        <div class="input-group mt-2">
+            <span class="input-group-text"><?= $TEXT['status']; ?></span>
+            <?php includeWith('./components/status-select.php', array('default' => isset($_GET['status']) ? $_GET['status'] : '')); ?>
+            <input class="btn btn-secondary" type="submit" value="<?= $TEXT['submit']; ?>" />
+        </div>
+    </form>
+</div>
+
+<div class="mt-3">
     <?php
         if(!empty($orders)):
     ?>
