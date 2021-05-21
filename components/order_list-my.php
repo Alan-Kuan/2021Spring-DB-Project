@@ -1,10 +1,4 @@
 <?php
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     $orders = array();
 
     try {
@@ -22,7 +16,7 @@
             $status = $_GET['status']; 
 
             if(!in_array($status, array('no-selection', 'pending', 'completed', 'canceled'))) {
-                header('Location: my_order.php');
+                sendPopupAndGoto($MSG['invalid-GET-param'], 'my_order.php');
                 exit();
             }
 

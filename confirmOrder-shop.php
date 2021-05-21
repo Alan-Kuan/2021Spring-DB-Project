@@ -8,7 +8,7 @@
     }
 
     if(!isset($_POST['OID'])) {
-        header('Location: my_order.php');
+        header('Location: shop_order.php');
         exit();
     }
 
@@ -18,28 +18,28 @@
         $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
         # set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT order_maker_id, shop_id, order_amount
-                                FROM orders
-                                WHERE order_maker_id = :UID
-                                    AND OID = :OID
-                                    AND status = 'pending'");
+        $stmt = $conn->prepare("SELECT o.shop_id
+                                FROM orders AS o JOIN shops AS s ON (o.shop_id = s.SID)
+                                    LEFT JOIN employee_shop AS e_s ON(s.SID = e_s.shop_id)
+                                WHERE s.shopkeeper_id = :UID OR e_s.employee_id = :UID
+                                    AND o.OID = :OID
+                                    AND o.status = 'pending'");
         $stmt->execute(array(
             'UID' => $_SESSION['UID'],
             'OID' => $OID)
         );
 
         if($stmt->rowCount() == 0) {
-            header('Location: my_order.php');
+            header('Location: shop_order.php');
             exit();
         }
 
         $row = $stmt->fetch();
 
-        $completer_id = $row['order_maker_id'];
+        $completer_id = $_SESSION['UID'];
         $shop_id = $row['shop_id'];
-        $amount = $row['order_amount'];
 
-        $stmt = $conn->prepare("UPDATE orders SET status = 'canceled', completer_id = :completer_id, completed_time = :completed_time
+        $stmt = $conn->prepare("UPDATE orders SET status = 'completed', completer_id = :completer_id, completed_time = :completed_time
                                 WHERE OID = :OID");
         $stmt->execute(array(
             'OID' => $OID,
@@ -47,15 +47,9 @@
             'completed_time' => date('Y-m-d H:i:s')
         ));
 
-        $stmt = $conn->prepare('UPDATE shops SET mask_amount = mask_amount + :amount WHERE SID = :shop_id');
-        $stmt->execute(array(
-            'amount' => $amount,
-            'shop_id' => $shop_id
-        ));
-
-        header('Location: my_order.php');
+        header('Location: shop_order.php');
 
     } catch(PDOException $e) {
-        sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'my_order.php');
+        sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'shop_order.php');
     }
 ?>

@@ -4,12 +4,6 @@
     session_start();
     $_SESSION['Authenticated'] = false;
 
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     if(!isset($_POST['username']) || !isset($_POST['password'])) {
         session_unset();
         session_destroy();
