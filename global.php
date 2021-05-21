@@ -1,6 +1,12 @@
 <?php
     date_default_timezone_set("Asia/Taipei");
 
+    $dbhostname = getenv('MYSQL_HOST');
+    $dbport = '3306';
+    $dbname = getenv('MYSQL_DATABASE');
+    $dbusername = getenv('MYSQL_USER');
+    $dbpassword = getenv('MYSQL_PASSWORD');
+
     $SITENAME = '口罩達人';
     $DESC = '輕鬆購買口罩一點也不困難！';
 
@@ -38,6 +44,7 @@
 
         // no selection
         'city-no-selection' => '請選擇一個縣市',
+        'work-shop-no-selection' => '請選擇一個店家',
         'status-no-selection' => '請選擇一個狀態',
 
         // order
@@ -87,6 +94,7 @@
 
         // order
         'OID' => '訂單編號',
+        'work-shop' => '工作店家',
         'status' => '狀態',
         'created-time' => '建立時間',
         'completed-time' => '完成/取消時間',
@@ -150,14 +158,10 @@ EOT;
 
     function getOwnedShopID() {
 
+        global $dbhostname, $dbport, $dbname, $dbusername, $dbpassword;
+
         if(isset($_SESSION['owned_shop_id']))
             return $_SESSION['owned_shop_id'];
-
-        $dbhostname = getenv('MYSQL_HOST');
-        $dbport = '3306';
-        $dbname = getenv('MYSQL_DATABASE');
-        $dbusername = getenv('MYSQL_USER');
-        $dbpassword = getenv('MYSQL_PASSWORD');
 
         try {
             $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
@@ -183,11 +187,7 @@ EOT;
 
     function isShopkeeper($UID) {
 
-        $dbhostname = getenv('MYSQL_HOST');
-        $dbport = '3306';
-        $dbname = getenv('MYSQL_DATABASE');
-        $dbusername = getenv('MYSQL_USER');
-        $dbpassword = getenv('MYSQL_PASSWORD');
+        global $dbhostname, $dbport, $dbname, $dbusername, $dbpassword;
 
         try {
             $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);

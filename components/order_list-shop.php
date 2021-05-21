@@ -1,10 +1,4 @@
 <?php
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     $orders = array();
 
     try {
@@ -21,11 +15,12 @@
                   WHERE (e_s.employee_id = :UID OR s.shopkeeper_id = :UID)';
         $query_var = array('UID' => $_SESSION['UID']);
 
-        if(isset($_GET['status'])) {
+        if(isset($_GET['status']) && isset($_GET['SID'])) {
 
             $status = $_GET['status']; 
+            $SID = $_GET['SID'];
 
-            if(!in_array($status, array('no-selection', 'pending', 'completed', 'canceled'))) {
+            if(!validateStatus($status) || !validateSID($SID)) {
                 header('Location: shop_order.php');
                 exit();
             }
@@ -35,13 +30,17 @@
                 $query_var['status'] = $status;
             }
 
+            if($SID !== 'no-selection') {
+                $query .= ' AND o.shop_id = :SID';
+                $query_var['SID'] = $SID;
+            }
+
         }
 
         $stmt = $conn->prepare($query);
         $stmt->execute($query_var);
 
-        if($stmt->rowCount() == 1) {
-            $row = $stmt->fetch();
+        while($row = $stmt->fetch()) {
             array_push($orders, array(
                 'OID' => $row['OID'],
                 'status' => $row['status'],
@@ -59,13 +58,37 @@
         echo 'Internal Error: ' . $e;
         exit();
     }
+
+    function validateStatus($status) {
+        return in_array($status, array('no-selection', 'pending', 'completed', 'canceled'));
+    }
+    function validateSID($SID) {
+        if($SID === 'no-selection')
+            return true;
+        return preg_match('/^[0-9]+$/', $SID);
+    }
 ?>
 
-<div class="mt-5 w-25">
+<div class="w-50 mt-5">
     <form method="get">
-        <div class="input-group mt-2">
+        <div class="input-group">
             <span class="input-group-text"><?= $TEXT['status']; ?></span>
             <?php includeWith('./components/status-select.php', array('default' => isset($_GET['status']) ? $_GET['status'] : '')); ?>
+
+            <span class="input-group-text"><?= $TEXT['work-shop']; ?></span>
+            <select class="form-select" name="SID">
+                <option value="no-selection"><?= $MSG['work-shop-no-selection']; ?></option>
+                <?php
+                    foreach(getWorkShops() as $shop):
+                ?>
+                <option value="<?= $shop['id']; ?>" <?= isset($_GET['SID']) && $_GET['SID'] === $shop['id'] ? 'selected' : ''; ?>>
+                    <?= $shop['name']; ?>
+                </option>
+                <?php
+                    endforeach;
+                ?>
+            </select>
+
             <input class="btn btn-secondary" type="submit" value="<?= $TEXT['submit']; ?>" />
         </div>
     </form>
@@ -133,3 +156,38 @@
         endif;
     ?>
 </div>
+
+<?php
+    function getWorkShops() {
+
+        global $dbhostname, $dbport, $dbname, $dbusername, $dbpassword;
+
+        $work_shops = array();
+
+        try {
+
+            $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
+            # set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $conn->prepare("SELECT SID, shop_name FROM shops WHERE shopkeeper_id = :UID");
+            $stmt->execute(array('UID' => $_SESSION['UID']));
+            while($row = $stmt->fetch())
+                array_push($work_shops, array('id' => $row['SID'], 'name' => $row['shop_name']));
+
+            $stmt = $conn->prepare("SELECT shop_id, shop_name
+                                    FROM employee_shop JOIN shops ON (shop_id = SID)
+                                    WHERE employee_id = :UID");
+            $stmt->execute(array('UID' => $_SESSION['UID']));
+            while($row = $stmt->fetch())
+                array_push($work_shops, array('id' => $row['shop_id'], 'name' => $row['shop_name']));
+
+        } catch(PDOException $e) {
+            echo 'Internal Error: ' . $e;
+            exit();
+        }
+
+        return $work_shops;
+
+    }
+?>

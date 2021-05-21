@@ -1,10 +1,4 @@
 <?php
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     $orders = array();
 
     try {

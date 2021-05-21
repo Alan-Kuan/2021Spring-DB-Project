@@ -1,10 +1,4 @@
 <?php
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     try {
         $conn = new PDO("mysql:host=$dbhostname;port=$dbport;dbname=$dbname", $dbusername, $dbpassword);
         # set the PDO error mode to exception
@@ -114,11 +108,7 @@
 <?php
     function getEmployees($shop_id) {
 
-        $dbhostname = getenv('MYSQL_HOST');
-        $dbport = '3306';
-        $dbname = getenv('MYSQL_DATABASE');
-        $dbusername = getenv('MYSQL_USER');
-        $dbpassword = getenv('MYSQL_PASSWORD');
+        global $dbhostname, $dbport, $dbname, $dbusername, $dbpassword;
 
         $employee_info = array();
 

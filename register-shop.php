@@ -7,12 +7,6 @@
         exit();
     }
 
-    $dbhostname = getenv('MYSQL_HOST');
-    $dbport = '3306';
-    $dbname = getenv('MYSQL_DATABASE');
-    $dbusername = getenv('MYSQL_USER');
-    $dbpassword = getenv('MYSQL_PASSWORD');
-
     if(!isset($_POST['shop_name']) || !isset($_POST['city']) || !isset($_POST['mask_price']) || !isset($_POST['mask_amount'])) {
         header('Location: shop.php');
         exit();
