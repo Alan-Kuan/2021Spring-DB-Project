@@ -18,7 +18,7 @@
                       LEFT JOIN users AS c ON (o.completer_id = c.UID)
                       JOIN shops AS s ON (o.shop_id = s.SID)
                       LEFT JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id)
-                  WHERE e_s.employee_id = :UID OR s.shopkeeper_id = :UID';
+                  WHERE (e_s.employee_id = :UID OR s.shopkeeper_id = :UID)';
         $query_var = array('UID' => $_SESSION['UID']);
 
         if(isset($_GET['status'])) {
@@ -106,7 +106,12 @@
                     (<?= $order['order_amount']; ?> * <?= $order['order_price']; ?>)
                 </td>
                 <td>
-                    <form action="cancelOrder-shop.php" method="post">
+                    <form class="d-inline-block" action="confirmOrder-shop.php" method="post">
+                        <input type="hidden" name="OID" value="<?= $order['OID']; ?>" />
+                        <input class="btn btn-success" type="submit" value="<?= $TEXT['confirm']; ?>"
+                               <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
+                    </form>
+                    <form class="d-inline-block" action="cancelOrder-shop.php" method="post">
                         <input type="hidden" name="OID" value="<?= $order['OID']; ?>" />
                         <input class="btn btn-danger" type="submit" value="<?= $TEXT['cancel']; ?>"
                                <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />

@@ -58,6 +58,7 @@
         'edit' => '編輯',
         'add' => '新增',
         'delete' => '刪除',
+        'confirm' => '確認',
         'cancel' => '取消',
         'logout' => '登出',
         
