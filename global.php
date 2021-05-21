@@ -42,6 +42,10 @@
 
         // order
         'no-order' => '這裡沒有訂單喔',
+
+        // during ordering
+        'order-fail' => '數量不足，無法訂購',
+        'order-success' => '成功訂購',
     );
 
     $TEXT = array(
@@ -66,6 +70,8 @@
         'shop' => '店家管理',
         'my-order' => '我的訂單',
         'shop-order' => '店家訂單',
+        'order-mask' => '訂購數量',
+        'order' => '訂購',
 
         // mask amount range
         'all' => '請選擇一個範圍',

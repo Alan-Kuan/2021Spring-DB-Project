@@ -44,8 +44,8 @@
             exit();
         }
 
-        $query = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
-        $query2 = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount ";
+        $query = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount, s.SID ";
+        $query2 = "SELECT s.shop_name, s.city, s.mask_price, s.mask_amount, s.SID ";
 
         if(isset($_GET['work-shop']) && $_GET['work-shop'] === 'on') {
             $query .= "FROM shops AS s JOIN employee_shop AS e_s ON (s.SID = e_s.shop_id)
@@ -143,7 +143,8 @@
             'shop_name' => $row['shop_name'],
             'city' => $row['city'],
             'mask_price' => $row['mask_price'],
-            'mask_amount' => $row['mask_amount'])
+            'mask_amount' => $row['mask_amount'],
+            'shop_id' => $row['SID'])
         );
     }
 
@@ -312,6 +313,9 @@
                     <?= $TEXT['mask-amount']; ?>
                     <i class="bi <?= isset($_GET['sort-mask_amount']) ? getIcon($_GET['sort-mask_amount']) : ''; ?>"></i>
                 </th>
+                <th id="order_mask">
+                    <?= $TEXT['order-mask']; ?>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -323,6 +327,16 @@
                 <td class="align-middle"><?= $CITY[$shop_info['city']]; ?></td>
                 <td class="align-middle"><?= $shop_info['mask_price']; ?></td>
                 <td class="align-middle"><?= $shop_info['mask_amount']; ?></td>
+                <td class="align-middle">
+                    <form action="make-order.php" method="post">
+                        <div class="input-group">
+                            <input class="form-control" type="number" id="order_amount" name="order_amount" min="0" />
+                            <input type="hidden" name="orderer" value="<?= $_SESSION['UID']; ?>" />
+                            <input type="hidden" name="shop_id" value="<?= $shop_info['shop_id']; ?>" />
+                            <button type="submit" class="btn btn-primary"><?= $TEXT['order']; ?></button>
+                        </div>
+                    </form>
+                </td>
             </tr>
         <?php
             endforeach;
