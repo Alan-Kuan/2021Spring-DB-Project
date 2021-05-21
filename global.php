@@ -49,6 +49,9 @@
 
         // order
         'no-order' => '這裡沒有訂單喔',
+
+        // invalid GET parameters
+        'invalid-GET-param' => '不要亂打喔:)',
     );
 
     $TEXT = array(

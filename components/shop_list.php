@@ -7,7 +7,7 @@
         if (!isset($_GET['shop_name']) || !isset($_GET['city']) || !isset($_GET['price_lower_bound']) || !isset($_GET['price_upper_bound']) 
             || !isset($_GET['amount_range']) || !isset($_GET['sort-shop_name']) || !isset($_GET['sort-city'])
             || !isset($_GET['sort-mask_price']) || !isset($_GET['sort-mask_amount'])) {    
-            header('Location: home.php');
+            sendPopupAndGoto($MSG['invalid-GET-param'], 'home.php');
             exit();
         }
         
@@ -23,7 +23,7 @@
             
         if(!validateCity($city) || !validateSort($sort_shop_name) || !validateSort($sort_city) || !validateSort($sort_mask_price)
            || !validateSort($sort_mask_amount)) {
-            header('Location: home.php');
+            sendPopupAndGoto($MSG['invalid-GET-param'], 'home.php');
             exit();
         }    
 
@@ -34,13 +34,13 @@
 
         $v_amount = validateAmount($amount_range);
         if($v_amount === -1) {
-            header('Location: home.php');
+            sendPopupAndGoto($MSG['invalid-GET-param'], 'home.php');
             exit();
         }
         $amount_range = $v_amount;
 
         if(isset($_GET['work-shop']) && !validateWorkShop($_GET['work-shop'])) {
-            header('Location: home.php');
+            sendPopupAndGoto($MSG['invalid-GET-param'], 'home.php');
             exit();
         }
 

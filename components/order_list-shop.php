@@ -15,13 +15,18 @@
                   WHERE (e_s.employee_id = :UID OR s.shopkeeper_id = :UID)';
         $query_var = array('UID' => $_SESSION['UID']);
 
-        if(isset($_GET['status']) && isset($_GET['SID'])) {
+        if(!empty($_GET)) {
+
+            if(!isset($_GET['status']) || !isset($_GET['SID'])) {
+                sendPopupAndGoto($MSG['invalid-GET-param'], 'shop_order.php');
+                exit();
+            }
 
             $status = $_GET['status']; 
             $SID = $_GET['SID'];
 
             if(!validateStatus($status) || !validateSID($SID)) {
-                header('Location: shop_order.php');
+                sendPopupAndGoto($MSG['invalid-GET-param'], 'shop_order.php');
                 exit();
             }
 

@@ -16,7 +16,7 @@
             $status = $_GET['status']; 
 
             if(!in_array($status, array('no-selection', 'pending', 'completed', 'canceled'))) {
-                header('Location: my_order.php');
+                sendPopupAndGoto($MSG['invalid-GET-param'], 'my_order.php');
                 exit();
             }
 
