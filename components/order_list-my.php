@@ -30,8 +30,7 @@
         $stmt = $conn->prepare($query);
         $stmt->execute($query_var);
 
-        if($stmt->rowCount() == 1) {
-            $row = $stmt->fetch();
+        while($row = $stmt->fetch()) {
             array_push($orders, array(
                 'OID' => $row['OID'],
                 'status' => $row['status'],
