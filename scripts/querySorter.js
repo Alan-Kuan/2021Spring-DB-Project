@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#query-output th').click(function() {
+    $('#query-output th:not(#order_mask)').click(function() {
 
         let item = $(this).attr('id');
         let status = $('#sort-' + item).val();

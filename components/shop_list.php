@@ -297,19 +297,19 @@
     <table id="query-output" class="table table-striped table-hover w-75 mt-3">
         <thead class="table-dark">
             <tr>
-                <th id="shop_name">
+                <th id="shop_name" style="cursor: pointer;">
                     <?= $TEXT['shop_name']; ?>
                 <i class="bi <?= isset($_GET['sort-shop_name']) ? getIcon($_GET['sort-shop_name']) : ''; ?>"></i>
                 </th>
-                <th id="city">
+                <th id="city" style="cursor: pointer;">
                     <?= $TEXT['city']; ?>
                     <i class="bi <?= isset($_GET['sort-city']) ? getIcon($_GET['sort-city']) : ''; ?>"></i>
                 </th>
-                <th id="mask_price">
+                <th id="mask_price" style="cursor: pointer;">
                     <?= $TEXT['mask-price']; ?>
                     <i class="bi <?= isset($_GET['sort-mask_price']) ? getIcon($_GET['sort-mask_price']) : ''; ?>"></i>
                 </th>
-                <th id="mask_amount">
+                <th id="mask_amount" style="cursor: pointer;">
                     <?= $TEXT['mask-amount']; ?>
                     <i class="bi <?= isset($_GET['sort-mask_amount']) ? getIcon($_GET['sort-mask_amount']) : ''; ?>"></i>
                 </th>
