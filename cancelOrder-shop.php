@@ -21,13 +21,13 @@
         $stmt = $conn->prepare("SELECT o.shop_id, o.order_amount
                                 FROM orders AS o JOIN shops AS s ON (o.shop_id = s.SID)
                                     LEFT JOIN employee_shop AS e_s ON(s.SID = e_s.shop_id)
-                                WHERE s.shopkeeper_id = :UID OR e_s.employee_id = :UID
+                                WHERE (s.shopkeeper_id = :UID OR e_s.employee_id = :UID)
                                     AND o.OID = :OID
                                     AND o.status = 'pending'");
         $stmt->execute(array(
             'UID' => $_SESSION['UID'],
-            'OID' => $OID)
-        );
+            'OID' => $OID
+        ));
 
         if($stmt->rowCount() == 0) {
             header('Location: shop_order.php');
