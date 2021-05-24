@@ -328,7 +328,7 @@
                 <td class="align-middle"><?= $shop_info['mask_price']; ?></td>
                 <td class="align-middle"><?= $shop_info['mask_amount']; ?></td>
                 <td class="align-middle">
-                    <form action="make-order.php" method="post">
+                    <form action="makeOrder.php" method="post">
                         <div class="input-group">
                             <input class="form-control" type="number" id="order_amount" name="order_amount" min="0" />
                             <input type="hidden" name="orderer" value="<?= $_SESSION['UID']; ?>" />
