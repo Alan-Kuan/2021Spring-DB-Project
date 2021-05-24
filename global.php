@@ -114,6 +114,7 @@
         'pending' => '待處理',
         'completed' => '已完成',
         'canceled' => '已取消',
+        'confirm-selected' => '確認選取的訂單',
         'cancel-selected' => '取消選取的訂單',
     );
 

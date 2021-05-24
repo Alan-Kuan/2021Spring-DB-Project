@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#cancel-selected').click(function(e) {
+    $('#confirm-selected, #cancel-selected').click(function(e) {
 
         e.preventDefault();
 

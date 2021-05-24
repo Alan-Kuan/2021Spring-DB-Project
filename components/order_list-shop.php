@@ -107,9 +107,16 @@
     <?php
         if(!empty($orders)):
     ?>
+    <form class="d-inline-block" action="confirmOrder-shop.php" method="post">
+        <input id="confirm-selected" class="btn btn-success" type="submit" value="<?= $TEXT['confirm-selected']; ?>" />
+    </form>
+    <form class="d-inline-block" action="cancelOrder-shop.php" method="post">
+        <input id="cancel-selected" class="btn btn-danger" type="submit" value="<?= $TEXT['cancel-selected']; ?>" />
+    </form>
     <table class="table table-striped table-hover mt-3">
         <thead class="table-dark">
             <tr>
+                <th></th>
                 <th id="OID"><?= $TEXT['OID']; ?></th>
                 <th id="status"><?= $TEXT['status']; ?></th>
                 <th id="created_time"><?= $TEXT['created-time']; ?></th>
@@ -126,6 +133,10 @@
             foreach($orders as $order):
         ?>
             <tr>
+                <td class="align-middle">
+                    <input class="order-check form-check-input" type="checkbox" data-OID="<?= $order['OID']; ?>"
+                           <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
+                </td>
                 <td class="align-middle"><?= $order['OID']; ?></td>
                 <td class="align-middle"><?= $TEXT[$order['status']]; ?></td>
                 <td class="align-middle"><?= $order['created_time']; ?></td>
@@ -139,12 +150,12 @@
                 </td>
                 <td>
                     <form class="d-inline-block" action="confirmOrder-shop.php" method="post">
-                        <input type="hidden" name="OID" value="<?= $order['OID']; ?>" />
+                        <input type="hidden" name="OID[]" value="<?= $order['OID']; ?>" />
                         <input class="btn btn-success" type="submit" value="<?= $TEXT['confirm']; ?>"
                                <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
                     </form>
                     <form class="d-inline-block" action="cancelOrder-shop.php" method="post">
-                        <input type="hidden" name="OID" value="<?= $order['OID']; ?>" />
+                        <input type="hidden" name="OID[]" value="<?= $order['OID']; ?>" />
                         <input class="btn btn-danger" type="submit" value="<?= $TEXT['cancel']; ?>"
                                <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
                     </form>
