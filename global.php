@@ -49,6 +49,7 @@
 
         // order
         'no-order' => '這裡沒有訂單喔',
+        'invalid-OID' => '發送的訂單編號包含已處理過的訂單或是沒有權限修改的訂單',
 
         // during ordering
         'order-fail' => '數量不足，無法訂購',
@@ -113,6 +114,7 @@
         'pending' => '待處理',
         'completed' => '已完成',
         'canceled' => '已取消',
+        'cancel-selected' => '取消選取的訂單',
     );
 
     $CITY = array(

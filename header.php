@@ -36,5 +36,6 @@
         <script src="/project/scripts/numberValidater.js"></script>
         <script src="/project/scripts/submissionValidater-shop.js"></script>
         <script src="/project/scripts/querySorter.js"></script>
+        <script src="/project/scripts/multipleOrderSelection.js"></script>
     </head>
     <body>
