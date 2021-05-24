@@ -61,6 +61,8 @@
             ));
         }
 
+        $orders = array_unique($orders, SORT_REGULAR);
+
     } catch(PDOException $e) {
         echo 'Internal Error: ' . $e;
         exit();
