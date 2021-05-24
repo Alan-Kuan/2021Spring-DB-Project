@@ -330,7 +330,7 @@
                 <td class="align-middle">
                     <form action="makeOrder.php" method="post" style="width: 10rem;">
                         <div class="input-group">
-                            <input class="form-control" type="number" id="order_amount" name="order_amount" min="0" />
+                            <input class="form-control" type="number" id="order_amount" name="order_amount" min="1" />
                             <input type="hidden" name="shop_id" value="<?= $shop_info['shop_id']; ?>" />
                             <button type="submit" class="btn btn-primary"><?= $TEXT['order']; ?></button>
                         </div>

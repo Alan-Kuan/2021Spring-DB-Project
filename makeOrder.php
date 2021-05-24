@@ -18,6 +18,16 @@
         exit();
     }
 
+    if(!validateShopID($_POST['shop_id'])) {
+        sendPopupAndGoto("OAO", 'home.php');
+        exit();
+    }
+
+    if(!validateAmount($_POST['order_amount'])) {
+        header('Location: home.php');
+        exit();
+    }
+
     try {
         $amount = $_POST['order_amount'];
 
@@ -31,12 +41,10 @@
         $query_get_amount = "SELECT mask_amount, mask_price FROM shops WHERE SID = :shop_id;";
         $query_update = "";
         $query_insert_order = "";
-        $query_var = array();
         $shop_id = $_POST['shop_id'];
-        $query_var['shop_id'] = $_POST['shop_id'];
 
         $stmt = $conn->prepare($query_get_amount);
-        $stmt->execute($query_var);
+        $stmt->execute(array('shop_id' => $shop_id));
 
         if($stmt->rowCount() == 1) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -47,21 +55,21 @@
             sendPopupAndGoto($MSG['order-fail'], 'home.php');
         }
 
-        if($stock >= $amount) {
+        try {
 
             $conn->beginTransaction();
 
             $query_update = "UPDATE shops SET mask_amount = mask_amount - :order_amount WHERE SID = :shop_id;";
             $query_insert_order = "INSERT INTO orders(status, created_time, order_maker_id, shop_id, order_amount, order_price)
                                     VALUES('pending', :created_date, :orderer, :shop_id, :order_amount, :price);";
-            
-            $query_var['orderer'] = $_SESSION['UID'];
-            $query_var['price'] = $price;
-            $query_var['order_amount'] = $amount;
-            $query_var['created_date'] = date('Y-m-d H:i:s');
 
             $stmt = $conn->prepare($query_insert_order);
-            $stmt->execute($query_var);
+            $stmt->execute(array(
+                'orderer' => $_SESSION['UID'],
+                'price' => $price,
+                'order_amount' => $amount,
+                'created_date' => date('Y-m-d H:i:s')
+            ));
 
             $stmt = $conn->prepare($query_update);
             $stmt->execute(array( // token number needs to be the same as parameters =A=
@@ -74,12 +82,24 @@
             sendPopupAndGoto($MSG['order-success'], 'home.php');
 
         }
-        else {
+        catch (PDOException $e){
             $conn->rollBack();
             sendPopupAndGoto($MSG['order-fail'], 'home.php');
         }
 
     } catch(PDOException $e) {
         sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'home.php');
+    }
+
+    function validateShopID($id) {
+
+        return preg_match('/^[0-9]+$/', $id);
+    
+    }
+
+    function validateAmount($amount) {
+
+        return preg_match('/^[+]?[0-9]*$/', $amount);
+    
     }
 ?>
