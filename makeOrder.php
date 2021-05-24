@@ -9,10 +9,9 @@
 
     session_start();
     if(!isset($_SESSION['Authenticated']) || !$_SESSION['Authenticated']) {
-        header('Location home.php');
+        header('Location: home.php');
         exit();
     }
-
 
     if(!isset($_POST['shop_id'])) {
         header('Location: home.php');
@@ -61,11 +60,8 @@
             $query_var['order_amount'] = $amount;
             $query_var['created_date'] = date('Y-m-d H:i:s');
 
-            var_dump($query_var);
-
             $stmt = $conn->prepare($query_insert_order);
             $stmt->execute($query_var);
-            echo 'insert ';
 
             $stmt = $conn->prepare($query_update);
             $stmt->execute(array( // token number needs to be the same as parameters =A=
@@ -84,8 +80,6 @@
         }
 
     } catch(PDOException $e) {
-        echo $e;
+        sendPopupAndGoto('Internal Error: ' . $e->getMessage(), 'home.php');
     }
-
-    
 ?>
