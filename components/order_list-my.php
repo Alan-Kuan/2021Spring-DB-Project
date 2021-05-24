@@ -27,6 +27,8 @@
 
         }
 
+        $query .= ' ORDER BY o.created_time DESC';
+
         $stmt = $conn->prepare($query);
         $stmt->execute($query_var);
 
