@@ -67,6 +67,7 @@
             $stmt->execute(array(
                 'orderer' => $_SESSION['UID'],
                 'price' => $price,
+                'shop_id' => $shop_id,
                 'order_amount' => $amount,
                 'created_date' => date('Y-m-d H:i:s')
             ));
