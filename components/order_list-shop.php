@@ -150,12 +150,12 @@
                 </td>
                 <td>
                     <form class="d-inline-block" action="confirmOrder-shop.php" method="post">
-                        <input type="hidden" name="OID[]" value="<?= $order['OID']; ?>" />
+                        <input type="hidden" name="OIDs[]" value="<?= $order['OID']; ?>" />
                         <input class="btn btn-success" type="submit" value="<?= $TEXT['confirm']; ?>"
                                <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
                     </form>
                     <form class="d-inline-block" action="cancelOrder-shop.php" method="post">
-                        <input type="hidden" name="OID[]" value="<?= $order['OID']; ?>" />
+                        <input type="hidden" name="OIDs[]" value="<?= $order['OID']; ?>" />
                         <input class="btn btn-danger" type="submit" value="<?= $TEXT['cancel']; ?>"
                                <?= $order['status'] !== 'pending' ? 'disabled' : ''; ?> />
                     </form>
