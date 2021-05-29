@@ -52,7 +52,7 @@
         'invalid-OID' => '發送的訂單編號包含已處理過的訂單或是沒有權限修改的訂單',
 
         // during ordering
-        'order-fail' => '數量不足，無法訂購',
+        'order-fail' => '庫存量不足，無法訂購',
         'order-success' => '成功訂購',
         
         // invalid GET parameters
